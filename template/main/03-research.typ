@@ -57,13 +57,104 @@ Both winners were contacted and confirmed receipt of their cinema tickets.
 == Qualitative Research: User Interviews
 
 Five in-depth interviews were conducted with target users before
-development began. The recordings are available at:
+development began. Recordings are available at:
 #link("https://t.me/+FMhVK6VUUOtjNjBi")[Telegram channel].
 
-The interviews confirmed the key pain points identified in the survey:
-dissatisfaction with existing recommendation algorithms, the habit of
-using phone notes to track films, and strong interest in social features
-and personal statistics.
+=== Methodology
+
+In-depth interviews were chosen over surveys because open-ended questions
+force respondents to formulate their own opinions rather than selecting
+from predefined options. Individual format allows the interviewer to follow
+unexpected threads and uncover insights that are not on the surface.
+Group interviews were avoided to prevent social influence on answers.
+
+Respondents were selected to represent different life situations: two
+students, one working professional, and two family respondents. The only
+selection criterion was an interest in watching films or series. Unlike
+the quantitative survey - where 90.5% of respondents were aged 18-24 -
+the interview participants represented a broader age range. This was
+intentional: to capture different behavioral patterns and avoid confirming
+only the assumptions of one demographic group.
+
+Each interview was conducted at a convenient time and location for the
+respondent. All participants gave verbal consent to recording and further
+use of the data.
+
+=== Interview Findings
+
+*Time spent searching varies dramatically.* Some respondents find
+something in 5 minutes, others spend up to 3 hours. Regardless of
+the actual time, all respondents considered the search process
+cognitively exhausting:
+
+#infobox()[
+  "If within 2-3 minutes I can't find anything - the desire just passes
+  and I don't watch anything at all."
+]
+
+*Phone notes are universally used but universally disliked.* Every
+respondent who keeps lists uses phone notes or saved TikToks. All of
+them described this as inconvenient:
+
+#infobox()[
+  "It's not convenient because there are too many actions - you always
+  need to adjust it, add things, delete things."
+]
+
+*TikTok and Instagram edits are the primary discovery tool.* Respondents
+do not rely on streaming algorithms to discover new content. Instead,
+they use short video edits to decide whether a film matches their mood
+before committing to watch it.
+
+*Friends' recommendations are trusted more than ratings.* IMDb ratings
+were specifically criticized for being misleading:
+
+#infobox()[
+  "I don't like IMDb ratings - they often spoil my impression of a film.
+  I would rate it 10, but IMDb shows 3."
+]
+
+*Filters are the most requested feature.* When asked what they want in
+an app, almost every respondent mentioned filters:
+
+#infobox()[
+  "The more filters, the better - the faster you can find what you want."
+]
+
+*A successful recommendation creates a strong emotional reaction.* When
+asked how they feel after finding the perfect film, respondents used
+words like "euphoria" and "delight" - confirming that the emotional
+payoff of a good recommendation is significant.
+
+=== User Persona
+
+Based on the interviews, the following persona was developed:
+
+#figure(
+  table(
+    columns: (auto, auto),
+    [*Name*], [Anna],
+    [*Age*], [25],
+    [*Status*], [Junior specialist, active schedule],
+    [*Platforms*], [Netflix, HD Rezka, YouTube],
+    [*Discovery*], [TikTok edits, Instagram, friends],
+    [*Tracking*], [Phone notes — finds it inconvenient],
+    [*Pain point*], [Spends too much time searching, recommendations don't match expectations],
+    [*Motivation*], [Emotional relief after a busy week],
+    [*Key request*], [Better filters, see what friends watch],
+  ),
+  caption: [User persona derived from qualitative interviews]
+)
+
+=== Implications for MovieCrush
+
+The interviews directly shaped the following product decisions:
+
+- *Mood-based filters* - respondents choose films by mood, not genre alone
+- *Social feed* - seeing what friends watch is more trusted than any algorithm
+- *Detailed ratings with comments* - numeric ratings are not trusted without context
+- *Simple onboarding* - "the more actions required, the less likely people are to use it"
+- *Watchlist and tracking* - replacing phone notes with a proper tool was a universal need
 
 == Key Findings
 
@@ -245,7 +336,6 @@ Based on all survey findings, the target segment is:
 - *Pain point:* Using phone notes to track films (49.8%)
 - *Wants:* hybrid AI recommendations (42%) and personal statistics (35.9%)
 
-MovieCrush has demonstrated 
 #infobox()[
   *Strong Product-Segment Fit* for: "Ukrainian tech-oriented youth aged 18-24,
   actively consuming content, unsatisfied with existing solutions, and willing
@@ -259,6 +349,7 @@ MovieCrush has demonstrated
   were aged 18-24. We found *Product-Segment Fit*, not full Product Market Fit.
 ]
 
+The following limitations should be considered when interpreting these results:
 
 + *Non-representative sample* - 89.9% of respondents were aged 18-24,
   which correlates with the author's age and social circle.
