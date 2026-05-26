@@ -3,40 +3,61 @@
 #pagebreak()
 = #i18n("design-title", lang:option.lang) <sec:design>
 
-#option-style(type:option.type)[
-In this section you turn your requirements into a concrete engineering blueprint. You’ll justify every major architectural choice, visualize structure with C4 diagrams for the first three layers, and map out your runtime topology so that peers can understand—and you can defend—every aspect of your system.
+== Business Process Research
 
-+ Clarify how functional and non-functional requirements drive your high-level architecture  
-+ List each architectural decision (for example, “We chose microservices to enable independent scaling and deployment”) and explain why it best meets your goals  
-+ Include a C4 Context diagram showing your system in its environment (users, external systems, data sources)  
-+ Include a C4 Container diagram breaking the system into deployable units (APIs, web front end, background workers, databases) and annotate communication styles and protocols  
-+ Include a C4 Component diagram for your core container(s), illustrating key modules, services or libraries and their interactions  
-+ Describe your deployment topology: physical or cloud hosts, network zones, load-balancing, failover and backup strategies  
-+ Summarize your technology stack, mapping each tool or framework back to a specific container or component and noting any trade-offs (performance, community support, learning curve)  
-+ Outline how data flows through the system—including storage models, messaging patterns or API contracts—and note any schema or interface versioning plans  
-+ Address cross-cutting concerns (Security, Logging, Monitoring, Scalability) and show where they sit in your topology  
+=== Stakeholder Analysis
 
-By walking through Requirements → Decisions → Diagrams → Topology, your Design section becomes a rigorous, evidence-backed foundation for the implementation that follows.  
+Understanding who is affected by MovieCrush and how they interact with
+the product is essential for making the right design decisions. The
+table below outlines the key stakeholders, their interests, influence
+on the project, and the engagement strategy.
 
-]
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    align: left,
+    [*Stakeholder*], [*Interest*], [*Influence*], [*Risk / Opportunity*], [*Strategy*],
+    [End users (film enthusiasts)],
+    [Discover content, track watches, find like-minded people],
+    [HIGH. They define product success],
+    [Risk: low loyalty, low premium conversion],
+    [Deep user research, fast iteration based on feedback],
 
-#lorem(50)
+    [Streaming services (Netflix, MEGOGO)],
+    [Grow and retain subscribers],
+    [MEDIUM. May or may not provide affiliate opportunities],
+    [Opportunity: affiliate revenue. Risk: refusal to cooperate],
+    [Position MovieCrush as a traffic source for their platforms],
 
-#add-chapter(
-  after: <sec:design>,
-  before: <sec:impl>,
-  minitoc-title: i18n("toc-title", lang: option.lang)
-)[
-  #pagebreak()
-  == Section 1
+    [Data providers (TMDb API)],
+    [Monetize their database, grow API usage],
+    [HIGH. Without their data the app is impossible],
+    [Risk: API terms change, price increases, quota limits],
+    [Use free tier at launch, plan migration to paid tier at scale],
 
-  #lorem(50)
+    [AI providers (Google Gemini)],
+    [Monetize AI models],
+    [HIGH. Recommendation quality defines product uniqueness],
+    [Risk: high API costs, unpredictable policy changes],
+    [Optimize requests, budget for AI costs from the start],
 
-  == Section 2
+    [Competitors (Letterboxd, TV Time)],
+    [Protect market share],
+    [MEDIUM. May copy features or run aggressive marketing],
+    [Risk: user churn],
+    [Focus on unique features (Soulmate, Wrapped)],
+  ),
+  caption: [MovieCrush stakeholder analysis]
+)
 
-  #lorem(50)
+#pagebreak()
+== System Architecture
 
-  == Conclusion
+#pagebreak()
+== Technology Stack
 
-  #lorem(50)
-]
+#pagebreak()
+== Database Design
+
+#pagebreak()
+== Data Flow
