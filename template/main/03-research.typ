@@ -442,7 +442,86 @@ The interviews directly shaped the following product decisions:
 
 === Overview of Existing Solutions
 
-// TODO: add detailed competitor overview
+The competitive landscape for film tracking apps includes four main
+players, each with a distinct approach and clear limitations that
+MovieCrush addresses.
+
+==== Letterboxd
+#link("https://app.notion.com/p/Letterboxd-2e9197e7fb16815cb0d4e748e367a8ed")[Full analysis with screenshots]
+
+Founded in 2011 in New Zealand, Letterboxd is the market leader in
+social film tracking with 17 million registered users as of 2024.
+Its strengths are a strong community, detailed film pages, and a
+well-known brand among film enthusiasts. The main weaknesses are
+that it covers films only, no TV series, has no personalized
+recommendations, and locks statistics behind a paid subscription.
+Its annual revenue is estimated at 5.5-19 million USD.
+
+==== TV Time
+#link("https://app.notion.com/p/TV-Time-2e9197e7fb168189bcefde1954f15592")[Full analysis with screenshots]
+
+Founded in 2013 in France, TV Time has around 30 million registered
+users and focuses on TV series tracking. It is free for users but
+monetizes through selling anonymized viewing data to studios and
+streaming services - a model that creates a conflict of interest
+between the product and its users. Key weaknesses include a poor
+interface, no friend ratings visible, weak recommendations, and
+problems with Ukrainian language support.
+
+==== IMDb
+#link("https://app.notion.com/p/IMDb-2e9197e7fb1681d8b19ce15f0423a358")[Full analysis with screenshots]
+
+Founded in 1990 and owned by Amazon, IMDb is the world's largest
+film and series database with over 670 million monthly site visits.
+It is a reference tool rather than a social platform - there
+are no friend connections or communities. Registration requires an
+Amazon account, the interface is overloaded, and the platform is
+deeply tied to the Amazon ecosystem which limits its independence
+as a product.
+
+==== Moviebase
+#link("https://app.notion.com/p/Moviebase-2e9197e7fb16817aae87d3faf03693ab")[Full analysis with screenshots]
+
+A German indie project launched in 2017, Moviebase uses TMDB as
+its data source and supports 39 languages. It has good tracking
+features and an anti-spoiler system in comments, but has no social
+features at all, no gamification, and is only available on Android.
+53% of its downloads come from Brazil, which limits its appeal in
+other markets. Annual revenue is estimated at 50,000-60,000 USD.
+
+==== Market Comparison
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    align: left,
+    table.header(
+      [*Metric*],
+      [*Letterboxd*],
+      [*TV Time*],
+      [*IMDb*],
+      [*Moviebase*],
+    ),
+    [Registered users], [17M], [30M], [100M+], [~500K],
+    [Content], [Films only], [Series + films], [Films + series], [Films + series],
+    [Social features], [Basic], [Groups only], [None], [None],
+    [Personalized recs], [No], [Poor], [Basic], [Basic],
+    [Statistics / Wrapped], [Pro only], [No], [No], [Pro only],
+    [Soulmate / matching], [No], [No], [No], [No],
+    [Ukrainian language], [No], [Partial], [Yes], [Yes],
+    [Revenue model], [Subscriptions + ads], [Data sales], [Ads + Amazon], [Subscriptions + ads],
+    [Est. annual revenue], [5.5-19M USD], [4.2M USD], [224M USD], [50-60K USD],
+  ),
+  caption: [Key metrics comparison across competing platforms]
+)
+
+#figure(
+  image("/resources/img/competitors/appmagic-comparison.png", width: 100%),
+  caption: [Featuring Score and chart rankings across four competitors,
+  Jan 2021 - Jan 2026 (AppMagic). Letterboxd leads in Featuring Score
+  with 3.3M, while Moviebase scores just 65 - reflecting the large
+  gap in platform visibility and store promotion.],
+)
 
 === Competitor Gap Analysis
 
@@ -540,6 +619,115 @@ The following limitations should be considered when interpreting these results:
   "youth aged 18-24, students, technical specializations."
   Validation on adjacent segments (25-34, non-IT professions) remains
   a goal for future work.
+
+== Economic Analysis
+
+=== Revenue Model
+
+MovieCrush uses a freemium model with two tiers. The free tier
+includes full tracking, social features, Wrapped analytics, and
+basic recommendations - more than most competitors offer for free.
+Revenue at this level comes from ads and affiliate links to
+streaming platforms.
+
+The paid tier - MovieCrush Pro - unlocks the Soulmate feature,
+AI-powered recommendations, and Instagram story templates. These
+features do not exist in competing apps, which justifies a price
+above the market baseline.
+
+=== Pricing Strategy
+
+Competitor pricing ranges from 13 USD/year (Moviebase) to 49 USD/year
+(Letterboxd Patron). Letterboxd Pro at 19 USD/year is the closest
+benchmark - its main selling point is statistics, which MovieCrush
+gives away for free.
+
+MovieCrush Pro is priced at *23.88 USD/year (1.99 USD/month)* for the
+annual plan and *2.99 USD/month* for monthly. The 1 USD/month difference
+between the two creates a clear reason to choose the annual plan.
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    align: left,
+    table.header([*Plan*], [*Price*], [*Per month*], [*Includes*]),
+    [Free], [0 USD], [-], [Full tracking, social features, Wrapped, ads],
+    [Pro - annual], [23.88 USD/year], [1.99 USD], [No ads, Soulmate, AI recommendations, story templates],
+    [Pro - monthly], [2.99 USD/month], [2.99 USD], [Same as annual],
+  ),
+  caption: [MovieCrush pricing tiers]
+)
+
+=== Cost Breakdown
+
+Current monthly infrastructure costs at the student project stage:
+
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: left,
+    table.header([*Service*], [*Plan*], [*Monthly cost*]),
+    [Render - backend], [Free tier (current)], [0 USD],
+    [Render - CF service], [Free tier (current)], [0 USD],
+    [Render Postgres], [Basic], [7 USD],
+    [Google Gemini API], [Free tier (current)], [0 USD],
+    [Resend], [Free tier], [0 USD],
+    [TMDB API], [Free tier], [0 USD],
+    [EAS Build], [Free tier], [0 USD],
+    [*Total (current)*], [], [*7 USD/month*],
+    [*Total (at scale)*], [], [*~23-26 USD/month*],
+  ),
+  caption: [Monthly infrastructure costs]
+)
+
+At the current stage, almost all services run on free tiers,
+bringing the actual monthly cost to just 7 USD - only Render
+Postgres requires a paid plan. At scale, moving to paid tiers
+for the backend, CF service, and Gemini API would bring the
+total to around 23-26 USD/month.
+
+=== Investment Requirements
+
+No external investment was needed to build and launch MovieCrush.
+All infrastructure runs on free or low-cost tiers. The only real
+cost was time. If the product were to grow beyond the current scale,
+the first investment would go toward moving to paid Render plans
+and a larger Postgres instance to handle more users.
+
+=== Financial Projections
+
+Using the realistic scenario of 100,000 MAU (220,000 registered
+users) and a 5% conversion to Pro:
+
+#figure(
+  table(
+    columns: (auto, auto),
+    align: left,
+    table.header([*Source*], [*Annual estimate*]),
+    [Pro subscriptions (11,000 users multiply 23.88 USD)], [~262,680 USD],
+    [Ads (free tier users)], [~20,000-40,000 USD],
+    [Affiliate links], [~5,000-15,000 USD],
+    [*Total*], [*~287,000-317,000 USD*],
+  ),
+  caption: [Revenue projection at 100,000 MAU]
+)
+
+These numbers are projections based on market benchmarks, not real
+revenue. The product is at an early stage and has not yet been
+monetized.
+
+=== Future Monetization Plans
+
+The next step in monetization is affiliate partnerships with
+streaming platforms such as JustWatch, where MovieCrush earns a
+small commission when a user clicks through to watch a film on a
+streaming service. This model is already used by Letterboxd and
+fits naturally into the product since users already look for
+"where to watch" information.
+
+Selling anonymized user data was considered but rejected - it
+creates a conflict between the product and its users, which goes
+against the core idea of MovieCrush as a user-first platform.
 
 == Domain-Specific Analysis
 
