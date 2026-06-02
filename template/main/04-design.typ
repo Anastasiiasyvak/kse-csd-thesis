@@ -306,3 +306,82 @@ User behaviour assumptions were also applied per table - for example, comments w
 *ON DELETE CASCADE on all user-owned data.* Every table that stores user content - ratings, lists, comments, follows, soulmate matches - has a foreign key to `users(id)` with `ON DELETE CASCADE`. Deleting a user account automatically removes all associated data without requiring application-level cleanup logic.
 
 The full storage calculations and per-field justifications were documented during the discovery phase and are available at: #link("https://docs.google.com/spreadsheets/d/1_dura7XQszr3Q1t2MPR7oEmg-by66hPnrtlbb6_Xav4/edit?usp=sharing")[Data Modelling Spreadsheet].
+
+
+== User Growth Projections
+
+To estimate system load, realistic user growth targets were defined first. Benchmarking against competitors was considered but rejected because Letterboxd has 17 million monthly users after 13 years on the market, which is not a useful baseline for a new product.
+
+Instead, growth projections were built around four key drivers
+specific to MovieCrush:
+
+- *Wrapped virality* - the strongest driver, similar to how Spotify Wrapped generates millions of social media posts every December
+- *Soulmate feature* - social motivation to invite friends and find matches
+- *AI recommendations* - a useful feature that drives retention
+- *Paid marketing* - eventual budget for user acquisition
+
+Three scenarios were defined:
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    align: left,
+    table.header([*Scenario*], [*Year 1 MAU*], [*Year 2 MAU*], [*Year 3 MAU*]),
+    [Conservative], [30,000], [100,000], [250,000],
+    [Realistic], [100,000], [500,000], [1,000,000],
+    [Optimistic], [250,000], [1,200,000], [2,500,000],
+  ),
+  caption: [MAU growth projections across three scenarios]
+)
+
+The realistic scenario is grounded in four concrete arguments:
+
++ Ukraine has ~30 million people. Capturing 0.3% of the population gives 100,000 users - a realistic target for a quality niche app.
++ If 20% of 100,000 users share their Wrapped report on Instagram (20,000 posts) and each brings 2 new users, that adds 40,000
+  users through virality alone.
++ Expanding to the US and Europe is a planned next step after the Ukrainian market is established. These markets are
+  significantly larger and would make 500 000+ users achievable in year 2-3 with the right positioning.
++ Comparable social apps at launch - Goodreads, early Duolingo - showed similar growth patterns in their first two years.
+
+DAU is estimated at 20% of MAU, which is a standard ratio for social and entertainment apps. These numbers feed directly into the load estimation in the next section.
+
+== Capacity Planning and Load Estimation
+
+Before making architectural decisions, a load estimation was done to understand how many requests the system would need to handle
+at different growth stages. The full calculations are available at:
+#link("https://docs.google.com/spreadsheets/d/1qcZocZ7fJ2jNEh-gGgsBA1W99wH_F3LBPKEYfw5ocTo/edit?usp=sharing")[Load Estimation Spreadsheet].
+
+One user makes roughly 81 requests per day across all actions: opening the app, searching for films, viewing movie pages, rating,
+commenting, and browsing recommendations. Using 20% of MAU as DAU, requests per second (RPS) were calculated for three scenarios:
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    align: left,
+    table.header([*Scenario*], [*MAU*], [*DAU*], [*RPS*]),
+    [Conservative - Year 1], [30,000], [6,000], [5.56],
+    [Conservative - Year 2], [100,000], [20,000], [18.52],
+    [Realistic - Year 1], [100,000], [20,000], [18.52],
+    [Realistic - Year 2], [500,000], [100,000], [92.59],
+    [Optimistic - Year 1], [250,000], [50,000], [46.3],
+    [Optimistic - Year 2], [1,200,000], [240,000], [222.22],
+  ),
+  caption: [RPS estimates across growth scenarios]
+)
+
+Request types follow a read-heavy pattern: 70% GET (browsing movies, profiles, recommendations), 20% POST (ratings, comments, lists), 8% PUT (profile and settings updates), and 2% DELETE.
+
+The key findings from this analysis directly shaped architectural decisions:
+
+- *5.56 RPS (conservative Year 1)* - a single server handles this
+  comfortably. This confirmed that starting with a modular monolith
+  on a single Render instance was the right call, with no need for
+  load balancing at launch.
+- *92.59 RPS (realistic Year 2)* - at this level, caching becomes
+  critical. This justified the two-level caching strategy: in-memory
+  LRU for TMDB responses and PostgreSQL tables for recommendation
+  results.
+- *222+ RPS (optimistic)* - would require horizontal scaling and
+  potentially extracting high-traffic modules into separate services.
+  The modular monolith structure was chosen specifically to make
+  this transition possible without rewriting the whole system.
