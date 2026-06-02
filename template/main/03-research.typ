@@ -22,6 +22,99 @@ All three methods were applied before development began, ensuring that
 product decisions were driven by real user needs and market evidence
 rather than assumptions.
 
+== Business Process Research
+
+=== Stakeholder Analysis
+
+Understanding who is affected by MovieCrush and how they interact with
+the product is essential for making the right design decisions. The
+table below outlines the key stakeholders, their interests, influence
+on the project, and the engagement strategy.
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    align: left,
+    [*Stakeholder*], [*Interest*], [*Influence*], [*Risk / Opportunity*], [*Strategy*],
+    [End users (film enthusiasts)],
+    [Discover content, track watches, find like-minded people],
+    [HIGH. They define product success],
+    [Risk: low loyalty, low premium conversion],
+    [Deep user research, fast iteration based on feedback],
+
+    [Streaming services (Netflix, MEGOGO)],
+    [Grow and retain subscribers],
+    [MEDIUM. May or may not provide affiliate opportunities],
+    [Opportunity: affiliate revenue. Risk: refusal to cooperate],
+    [Position MovieCrush as a traffic source for their platforms],
+
+    [Data providers (TMDb API)],
+    [Monetize their database, grow API usage],
+    [HIGH. Without their data the app is impossible],
+    [Risk: API terms change, price increases, quota limits],
+    [Use free tier at launch, plan migration to paid tier at scale],
+
+    [AI providers (Google Gemini)],
+    [Monetize AI models],
+    [HIGH. Recommendation quality defines product uniqueness],
+    [Risk: high API costs, unpredictable policy changes],
+    [Optimize requests, budget for AI costs from the start],
+
+    [Competitors (Letterboxd, TV Time)],
+    [Protect market share],
+    [MEDIUM. May copy features or run aggressive marketing],
+    [Risk: user churn],
+    [Focus on unique features (Soulmate, Wrapped)],
+  ),
+  caption: [MovieCrush stakeholder analysis]
+)
+
+== Product Discovery and Business Analysis
+
+Before writing any code, a business analysis was done to define
+what the product should be, who it is for, and how users would
+move through it. The full discovery board is available at:
+#link("https://miro.com/app/board/uXjVJtM7d80=/?share_link_id=552779233196")[Miro Board - MovieCrush Business Analysis].
+
+The board shows the original product vision from before development
+started. Some features changed or were removed during the process
+based on what was realistic to build - this is mentioned throughout
+the thesis where it matters.
+
+=== Vision and Mission
+
+*Vision:* To create a home for movie lovers - a place to share
+impressions, discover new films through friends, and relive every
+emotion. MovieCrush helps you find not just your next favorite film,
+but also the people who will love it with you.
+
+*Mission:* To solve the "what should I watch?" problem for good.
+Using personalization and community to help users discover, track,
+and share movies they will truly love - making every viewing decision
+easy and every opinion heard.
+
+=== Value Proposition
+
+The Value Proposition Canvas below shows the main user problems,
+what users are trying to do, and what MovieCrush offers in response.
+
+#figure(
+  image("/resources/img/discovery/value-proposition.png", width: 100%),
+  caption: [Value Proposition Canvas developed during the discovery phase],
+)
+
+=== Customer Journey
+
+The customer journey map covers five stages: Awareness,
+Consideration, Purchase, Engagement, and Renewal. It shows how
+users find out about MovieCrush, what makes them sign up, and
+what keeps them using it.
+
+#figure(
+  image("/resources/img/discovery/customer-journey.png", width: 100%),
+  caption: [Customer Journey Map - from discovery to long-term retention],
+)
+
 == Quantitative Research: User Survey
 
 The survey consisted of 5 blocks of questions:
