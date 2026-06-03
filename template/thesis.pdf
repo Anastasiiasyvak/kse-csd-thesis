@@ -40,11 +40,11 @@ endobj
 5 0 obj
 <<
   /Parent 2 0 R
-  /Next 15 0 R
+  /Next 10 0 R
   /Prev 4 0 R
   /First 6 0 R
-  /Last 14 0 R
-  /Count -9
+  /Last 9 0 R
+  /Count -4
   /Title (1 Introduction)
   /Dest 1400 0 R
 >>
@@ -82,7 +82,6 @@ endobj
 9 0 obj
 <<
   /Parent 5 0 R
-  /Next 10 0 R
   /Prev 8 0 R
   /Title (1.4 Boxes)
   /Dest 1394 0 R
@@ -101,7 +100,7 @@ endobj
 
 11 0 obj
 <<
-  /Parent 5 0 R
+  /Parent 10 0 R
   /Next 12 0 R
   /Prev 10 0 R
   /Title (1.6 Code)
@@ -111,7 +110,7 @@ endobj
 
 12 0 obj
 <<
-  /Parent 5 0 R
+  /Parent 10 0 R
   /Next 13 0 R
   /Prev 11 0 R
   /Title (1.7 Context Problem)
@@ -121,8 +120,7 @@ endobj
 
 13 0 obj
 <<
-  /Parent 5 0 R
-  /Next 14 0 R
+  /Parent 10 0 R
   /Prev 12 0 R
   /Title (1.8 Objectives)
   /Dest 1398 0 R
@@ -153,7 +151,7 @@ endobj
 
 16 0 obj
 <<
-  /Parent 15 0 R
+  /Parent 14 0 R
   /Next 17 0 R
   /Title (2.1 Section 1)
   /Dest 1401 0 R
@@ -162,8 +160,7 @@ endobj
 
 17 0 obj
 <<
-  /Parent 15 0 R
-  /Next 18 0 R
+  /Parent 14 0 R
   /Prev 16 0 R
   /Title (2.2 Section 2)
   /Dest 1402 0 R
@@ -194,7 +191,7 @@ endobj
 
 20 0 obj
 <<
-  /Parent 19 0 R
+  /Parent 18 0 R
   /Next 21 0 R
   /Title (3.1 Section 1)
   /Dest 1405 0 R
@@ -203,8 +200,7 @@ endobj
 
 21 0 obj
 <<
-  /Parent 19 0 R
-  /Next 22 0 R
+  /Parent 18 0 R
   /Prev 20 0 R
   /Title (3.2 Section 2)
   /Dest 1406 0 R
@@ -4912,7 +4908,7 @@ endobj
 >>
 endobj
 
-481 0 obj
+483 0 obj
 <<
   /Type /StructElem
   /S /LBody
@@ -10246,7 +10242,7 @@ endobj
 >>
 endobj
 
-946 0 obj
+531 0 obj
 <<
   /Type /StructElem
   /S /TD
@@ -10260,7 +10256,7 @@ endobj
 >>
 endobj
 
-947 0 obj
+532 0 obj
 <<
   /Type /StructElem
   /S /THead
@@ -14423,7 +14419,7 @@ endobj
   /Type /FontDescriptor
   /FontName /RLXBFB+LibertinusSerif-Regular
   /Flags 131078
-  /FontBBox [-68 -238 1002 820]
+  /FontBBox [-68 -238 1002 736]
   /ItalicAngle 0
   /Ascent 894
   /Descent -246
@@ -14520,19 +14516,19 @@ endcodespacerange
 <0036> <0075>
 <0037> <0073>
 <0038> <0068>
-<0039> <0034>
-<003A> <2022>
-<003B> <0062>
-<003C> <00660069>
-<003D> <0049>
-<003E> <006A>
-<003F> <002D>
-<0040> <0028>
-<0041> <0029>
+<0039> <0049>
+<003A> <0062>
+<003B> <006A>
+<003C> <2022>
+<003D> <00660069>
+<003E> <002D>
+<003F> <0028>
+<0040> <0029>
+<0041> <0033>
 <0042> <0056>
-<0043> <0033>
-<0044> <0035>
-<0045> <0047>
+<0043> <0034>
+<0044> <004F>
+<0045> <0035>
 <0046> <0037>
 <0047> <0038>
 <0048> <004F>
@@ -14752,17 +14748,17 @@ endcodespacerange
 <0020> <0031>
 <0021> <007C>
 <0022> <002E>
-<0023> <0070>
+<0023> <0078>
 <0024> <0032>
-<0025> <0033>
-<0026> <004E>
-<0027> <0034>
-<0028> <0078>
-<0029> <0035>
-<002A> <002C>
-<002B> <0047>
-<002C> <0036>
-<002D> <0037>
+<0025> <006A>
+<0026> <0033>
+<0027> <0052>
+<0028> <0070>
+<0029> <0034>
+<002A> <0066>
+<002B> <0056>
+<002C> <0035>
+<002D> <0036>
 <002E> <0050>
 <002F> <0038>
 <0030> <006A>
@@ -14883,7 +14879,7 @@ endobj
 
 1339 0 obj
 <<
-  /Length 13
+  /Length 12
   /Filter /FlateDecode
 >>
 stream
@@ -14974,8 +14970,8 @@ endcodespacerange
 <0022> <0029>
 <0023> <0041>
 <0024> <0043>
-<0025> <0059>
-<0026> <0042>
+<0025> <0049>
+<0026> <0077>
 <0027> <2019>
 <0028> <0077>
 <0029> <002E>
@@ -39014,8 +39010,7 @@ endobj
     >>
   >>
   /MediaBox [0 0 595.2756 841.8898]
-  /StructParents 5
-  /Tabs /S
+  /StructParents 3
   /Parent 1 0 R
   /Contents 3416 0 R
   /Annots [3413 0 R 3414 0 R]
@@ -39060,8 +39055,7 @@ endobj
   /Filter /FlateDecode
 >>
 stream
-xœ1OÃ0…÷û7Òøì8‰+•JM)BHH ¼µŒ›@†Ä%=ş=º0TË÷tOï†O­FîÚ@T+æß›n•OÇ½T/Ÿ¯üulPİ7áĞŒRùé~
-oİ¸K,—Xß®á4^k´VgÆäXU&³–æ{P‘0€ğ¨=úTK¨	}{ş•ğ=l¯vD´£ÜHê™Ì¦jºsıY–,¥ ¸Ùıl<<ÃæqêwÕ:1§şÒö.%ş»­«2]˜¹ÃÒd®t./ş-|sÆ¥Á7Ğ©jE
+xœ1oÂ0…÷û7–¡ñÙqGBH„‚P¥J­êŒIÚ‰!˜.C¥ªË÷tOï†OÌ‡Ø6ÎGœNQÌctş»>àFØpÜqõyÙÇë±F±®İ¡¸²ãıî¾ÚŞÅ6ô0›aõ²€H$$|–¨µL”J±(T¢5•è;ĞŸğì{¨,ÚDC(	msÿå°l¶D´¥TqÊ	ÏÆj¼S†şYäÌ9£`˜Éí+,-|ÀòmâwÕ*ÄºGÛUñï¶¦Hd¦Jƒ¹JLnLšı[¸¼ãÑàÏ¹j9
 endstream
 endobj
 
@@ -39079,7 +39073,7 @@ endobj
     >>
   >>
   /MediaBox [0 0 595.2756 841.8898]
-  /StructParents 6
+  /StructParents 4
   /Parent 1 0 R
   /Contents 3420 0 R
 >>
@@ -39087,14 +39081,15 @@ endobj
 
 3420 0 obj
 <<
-  /Length 1476
+  /Length 1478
   /Filter /FlateDecode
 >>
 stream
-xœµZKoã6¾ëWÆ¢¨¶0Í!%Ql²i“ìÛ)ZÄ·õloÜ¦hâÔëúïÉÔcÈ!åXÉÅ‚ŠœÇ7ß<äÙån¿Y®÷ìü<alv¹ß/×Ş}aŸfóíÓçêÑí¿«ıOwlöñnùånW=š×÷¿-ÿ¸\îï·ÉÅ»zü“ L°)°,.¥bZKeÂ°õC2[¶şšöuı˜\ÍÁæ»d¶›oºw«Ëü!ùôíB±JVWH«eõ£ú^U?Ùa…€êšW?Eõ£«Ÿ2ıÌæ¿$æÉïÉ‡›ëdvû´|´jŞ\ÿü	Blc¸Y°4£!‹ÈLf1¹e2‘Và…•~!d-éÂŠ½²z±Ã«Á^•°WèÛ¤{[Ö­ú{4kT†÷’™³‡¤÷´ug´gY"–Í³’Cnd6ì»êçM-Ê	X«=±tÏ­7öN!Kë”MõÁKgk†7KYÙz³~t†³Gçw»ú^„Ğ†­FEïx»Ú>¤–4Š¡Í¡íë™¼æ*±9Ğ!™/h½ü"¦&””é‡$lâ…JcFÇ Œ±Ê÷Qµ6e­Øz°$x*7`R)Ò¡ ± šk	§A-Ó÷)›ÿ9[gƒ(y®Õ¨Ã[jÓ-	×ã8[\Ù±	‰q{ß[wb·B-MôhuâCğ a…·¬,œüh±åàÂöŠ©…3~a­¯‹ÃJØã,eS\T9RäİŠ~¤Úõò.I9®[‘‰¿»ñM‹¨uĞ)vwÌ±ı†‚0‹(®”‚Óaã›1Hmgİg”¶maĞOå{Ûm¤,7Ö™ƒD”Gˆ(3%7YÅk1QsÀ˜ÓøÙg-¹Ge‹¡¤:>!:aÜßşÔÈÅùñ‘“’C¡I)Ø1d[h:˜mKÆ"ÆÖÖ˜ãRÄU‹“E°Nv)¦ Wp¬ä&X ì¤ÁP êh”Ïs="0Ÿú¥N˜—V3¸Ìë‚%.»ãH©Œ‘’
-óz¤d¢qúQõQG2eÓ‚cLal¼÷ú‡¦İõª¥C!tÂPŠk°&êã¾§záG¬‹?·i¨÷®£Qc6²”‹tMÚGk¤µ¾\ÖÂ(DYîH9VA‡fO(ˆ@D±Ÿç\—0ûòB›bˆ„¶¢¾ÑS†‰fÒ¡„—ƒL`T·Ñæ´ ïvNĞ{>äJˆÍSªA›2êõÈd1#ïÍs×â´Ã
-”ÛhR™Ã?m¨€¨r Ã p¶Âä…‰£ˆtŠTìï®›İ'®gGVU_yÛóúP1˜KÍ…xÅF¢­â˜ã¢€t±Ó¸KÇ®`– W‘M	Ê–N¬‘±ñcÊ Ç—]…²HQ@¤§ÍO:“3QÒJSrœòf(1¸Q—NNIñ™S…Ø¥G5t•ÓczÃmzpÙ›Ø¸n{Ûh¼€qLx.üjvÁNÂ¹£AöU}y½şIMTFrĞôKdÚã?š¤3yæÇŠ&B sæºÑ-é6Êñ¡“®1Ó—§{>?ñSi
-$¯8äšãúóødü”Ú`Ç:†c­¹60Ç¡6²Õ›„üD¶S<:uYË/¾#È%ª*o‚!L5«jXØ	éjâE8‰šÔ€ÈÎ”Fs•+ÈG8S•*í‡r·Êî7NÁ‘1^TŒœÀK£_B±oR–gzÅVS÷T©ŸÜÒŞO»û^4ü)¢®Ó/2—§»î1üYİóÅñ®íŸQ®n^ÑªÊF52_ß&‚İ^ÿšdì&©V?$×JÊ’	öwrëííıÑåj»ßoğ]~Ún÷Çÿ×¥,¸RÒ”¬¼,ÊR &òw—w)›J›+lŸÿâ?GF
+xœµZKoã6¾ëWÆ¢¨º0Í!%QLÓ´Iv‹v-âÛz¶7nS4qêõúïÉ”Ä¡†”c%Û(rß|óg—»ııf¹Ş³óó„±Ùå~¿\ÿu÷™}œÍ·OŸª[·_WûÿîØì—»åç»]uk^_ÿ¾üóşq¹¿ß>&ìêİuòoL0Á¦À²¸”Ši-y–	ÃÖÉl-ØúK"Ø—õcr5O›ï’ÙF0l¾é­¾æÉÇoBˆ…P²ú†´ZVßª¯Uõ‘V¨¾óê£¨>tõQ¦ŸØüCò~ü‘¼¿¹Nf·OËG«æÍõ¯ï˜ Ä6†K+@s0²ˆÜÀd“[æ)yya^XéBÖ’.¬Ø!k¡;¼ì·ö\›tO«Ãº•»G³Fex/™y{HzO+QwF{öe!bÙ<+9äFÆaÃšêãM-Ê	X«=±·´cÆÖ{¥¥uÊ¦úà¥‰·5Ã›¥¬l½Yß:C†Ù£ó»]û^„Ğ†­F…s¼]moRKÅĞ‚æĞöñÌ^ó-±9Ğ!Y_Ğzù÷15‘ ¤lH?t$a“^¨4fôÒÀk ú>ªÖ¦¬[‚c »@BOåLê E:2Rs-á” ¨e:OÙüïÈÙŠ8DÉs­FŞR›öhIøÇqØ‚ğàJ'Ä&$Æíµ³î»"hi¢À¡ÕI‚[(|GÁÊÂ©-¶<üQØ^"µpÆ ¬¹ºxl T€=ÎR6ÁE•#EŞ­p#Õ®G÷IÊsİŠLDøÙMß´ˆZbwÇœÛo(³h €âJ)8=6}3©í¬{âŒÒ¶-ÜTî±·İVAÊrc9HDy„ˆ2Sr“åP¼1Œ9ıà·Èv8kyÈ=*[%Õñ	ÑcwûS#çÇ3DN~H…&¥`Çm¡éa¶-‹KX[cóHW-^Á:Ù¥˜‚|Á±’›`²{C¨£1Pf<ÏõˆÀ|Ú/uÂ¼´
+˜Ág^D(qyXØGJeŒ”´àP˜×#%uÈˆÓª:Z)›Üc
+cãİéšv·W-m<
+¡†
+T\ƒ5‘‹û.œê…G¬?¿iÈyÖÓ¨1YÊEº&İGk¤µ}¹¬…Qˆx²İ7r¬‚ÍPˆb?Ï¹.aö!ä…6Å	mE1|£§Í ¤C	;.™À¨n£ÍiAßí¼ ïùl+!6O©mÊ¨×#KQÄŒ8Ş™ç<¯Åi‡(·y4Ğ¤2Ú2PQå@†Aám…ÉGé©Øß]7ºO\Ï¬ª&}]XdhÔkØ×§€ŠÁ\j.Ä+6*mÇï¤‹½vÀŸXzv… ³¹ŠlJP¶ôbŒS_vÊ"E‘6?ñè8LÎDI(MÉqÊ›¡XÄàF]:9%ÄgNb?õ¨†®rºqŒ3Ü¦—ÎÄÆwÛóØn0@óhˆ€äŒkdÂsáW³vÎŠ°‡¨ê«×ëŸÔAa@e$m@¿D¦=ş¥	I:“g¾¬h"0çˆ¡a®İ’n£<zé3ípyJ`Ğñù‰¯zHëP 	¼Å!××ŸÇ'ã§Ôƒ8Ö1kÍµ8µ	”­&Ø$ä+ª´½âÑ«ËZ~é[0‚\¢ªêMĞ1„©ÆsUÛ!!]M¼'Q“ÙÁ™Òh®rùgª¢R¥}QîWÙnã‰ã…AÅÈ)P¼4ú%û&eyæùÇ)¶šºØQ¥Vüòà–özÚ]ÏÚ›õ¯éàHu.x‘é¼<İuá×ê=Pï+Ğşåê&à­ªhT#óõm"ØíõoIÆn’jõCp­¤,™`ÿ$·½½{t¹Úî÷Ûü_—Ÿ·Ûıñÿu)®”4%+$/‹²T¨‰üİÅ¤l*-l®°}ş¤çGD
 endstream
 endobj
 
@@ -39106,7 +39101,7 @@ endobj
   /Border [0 0 0]
   /Dest (sec:ack)
   /F 4
-  /StructParent 7
+  /StructParent 5
   /Contents <FEFF0020201C00410063006B006E006F0077006C0065006400670065006D0065006E00740073201D0020007000610067006500200031>
 >>
 endobj
@@ -39119,7 +39114,7 @@ endobj
   /Border [0 0 0]
   /Dest (sec:abstract)
   /F 4
-  /StructParent 8
+  /StructParent 6
   /Contents <FEFF0020201C00410062007300740072006100630074201D0020007000610067006500200033>
 >>
 endobj
@@ -39132,7 +39127,7 @@ endobj
   /Border [0 0 0]
   /Dest (sec:intro)
   /F 4
-  /StructParent 9
+  /StructParent 7
   /Contents <FEFF00310020201C0049006E00740072006F00640075006300740069006F006E201D0020007000610067006500200034>
 >>
 endobj
@@ -39145,8 +39140,8 @@ endobj
   /Border [0 0 0]
   /Dest 1391 0 R
   /F 4
-  /StructParent 10
-  /Contents <FEFF0031002E00310020201C004200610073006900630020006D00610072006B00750070201D0020007000610067006500200034>
+  /StructParent 8
+  /Contents <FEFF0031002E00310020201C0043006F006E007400650078007400200061006E00640020004D006F007400690076006100740069006F006E201D0020007000610067006500200034>
 >>
 endobj
 
@@ -39158,8 +39153,8 @@ endobj
   /Border [0 0 0]
   /Dest 1392 0 R
   /F 4
-  /StructParent 11
-  /Contents <FEFF0031002E00320020201C0049006D0061006700650073201D0020007000610067006500200035>
+  /StructParent 9
+  /Contents <FEFF0031002E00320020201C004F0062006A0065006300740069007600650073201D0020007000610067006500200034>
 >>
 endobj
 
@@ -39171,8 +39166,8 @@ endobj
   /Border [0 0 0]
   /Dest 1393 0 R
   /F 4
-  /StructParent 12
-  /Contents <FEFF0031002E00330020201C005400610062006C00650073201D0020007000610067006500200035>
+  /StructParent 10
+  /Contents <FEFF0031002E00330020201C0052006500730065006100720063006800200041007000700072006F006100630068201D0020007000610067006500200035>
 >>
 endobj
 
@@ -39184,8 +39179,8 @@ endobj
   /Border [0 0 0]
   /Dest 1394 0 R
   /F 4
-  /StructParent 13
-  /Contents <FEFF0031002E00340020201C0042006F007800650073201D0020007000610067006500200035>
+  /StructParent 11
+  /Contents <FEFF0031002E00340020201C0053007400720075006300740075007200650020006F0066002000540068006900730020005400680065007300690073201D0020007000610067006500200035>
 >>
 endobj
 
@@ -39197,8 +39192,8 @@ endobj
   /Border [0 0 0]
   /Dest 1395 0 R
   /F 4
-  /StructParent 14
-  /Contents <FEFF0031002E00350020201C004300690074006100740069006F006E0073002C0020004100630072006F006E0079006D007300200061006E006400200047006C006F00730073006100720079201D0020007000610067006500200036>
+  /StructParent 12
+  /Contents <FEFF00320020201C00520065007300650061007200630068201D0020007000610067006500200036>
 >>
 endobj
 
@@ -39210,8 +39205,8 @@ endobj
   /Border [0 0 0]
   /Dest 1396 0 R
   /F 4
-  /StructParent 15
-  /Contents <FEFF0031002E00360020201C0043006F00640065201D0020007000610067006500200037>
+  /StructParent 13
+  /Contents <FEFF0032002E00310020201C00530065006300740069006F006E00200031201D0020007000610067006500200037>
 >>
 endobj
 
@@ -39223,8 +39218,8 @@ endobj
   /Border [0 0 0]
   /Dest 1397 0 R
   /F 4
-  /StructParent 16
-  /Contents <FEFF0031002E00370020201C0043006F006E0074006500780074002000500072006F0062006C0065006D201D0020007000610067006500200037>
+  /StructParent 14
+  /Contents <FEFF0032002E00320020201C00530065006300740069006F006E00200032201D0020007000610067006500200037>
 >>
 endobj
 
@@ -39236,8 +39231,8 @@ endobj
   /Border [0 0 0]
   /Dest 1398 0 R
   /F 4
-  /StructParent 17
-  /Contents <FEFF0031002E00380020201C004F0062006A0065006300740069007600650073201D0020007000610067006500200038>
+  /StructParent 15
+  /Contents <FEFF0032002E00330020201C0043006F006E0063006C007500730069006F006E201D0020007000610067006500200037>
 >>
 endobj
 
@@ -39249,8 +39244,8 @@ endobj
   /Border [0 0 0]
   /Dest 1399 0 R
   /F 4
-  /StructParent 18
-  /Contents <FEFF0031002E00390020201C0053007400720075006300740075007200650020006F0066002000740068006900730020007200650070006F00720074201D0020007000610067006500200038>
+  /StructParent 16
+  /Contents <FEFF00330020201C00440065007300690067006E201D0020007000610067006500200038>
 >>
 endobj
 
@@ -39260,10 +39255,10 @@ endobj
   /Subtype /Link
   /Rect [99.2126 518.5032 496.063 525.7412]
   /Border [0 0 0]
-  /Dest (sec:analysis)
+  /Dest 562 0 R
   /F 4
-  /StructParent 19
-  /Contents <FEFF00320020201C00520065007300650061007200630068201D0020007000610067006500200039>
+  /StructParent 17
+  /Contents <FEFF0033002E00310020201C00530065006300740069006F006E00200031201D0020007000610067006500200039>
 >>
 endobj
 
@@ -39275,8 +39270,8 @@ endobj
   /Border [0 0 0]
   /Dest 1401 0 R
   /F 4
-  /StructParent 20
-  /Contents <FEFF0032002E00310020201C00530065006300740069006F006E00200031201D00200070006100670065002000310030>
+  /StructParent 18
+  /Contents <FEFF0033002E00320020201C00530065006300740069006F006E00200032201D0020007000610067006500200039>
 >>
 endobj
 
@@ -39288,8 +39283,8 @@ endobj
   /Border [0 0 0]
   /Dest 1402 0 R
   /F 4
-  /StructParent 21
-  /Contents <FEFF0032002E00320020201C00530065006300740069006F006E00200032201D00200070006100670065002000310030>
+  /StructParent 19
+  /Contents <FEFF0033002E00330020201C0043006F006E0063006C007500730069006F006E201D0020007000610067006500200039>
 >>
 endobj
 
@@ -39301,8 +39296,8 @@ endobj
   /Border [0 0 0]
   /Dest 1403 0 R
   /F 4
-  /StructParent 22
-  /Contents <FEFF0032002E00330020201C0043006F006E0063006C007500730069006F006E201D00200070006100670065002000310030>
+  /StructParent 20
+  /Contents <FEFF00340020201C0049006D0070006C0065006D0065006E0074006100740069006F006E201D00200070006100670065002000310030>
 >>
 endobj
 
@@ -39312,10 +39307,10 @@ endobj
   /Subtype /Link
   /Rect [99.2126 460.95117 496.063 468.18918]
   /Border [0 0 0]
-  /Dest (sec:design)
+  /Dest 566 0 R
   /F 4
-  /StructParent 23
-  /Contents <FEFF00330020201C00440065007300690067006E201D00200070006100670065002000310031>
+  /StructParent 21
+  /Contents <FEFF0034002E00310020201C00530065006300740069006F006E00200031201D00200070006100670065002000310031>
 >>
 endobj
 
@@ -39327,8 +39322,8 @@ endobj
   /Border [0 0 0]
   /Dest 1405 0 R
   /F 4
-  /StructParent 24
-  /Contents <FEFF0033002E00310020201C00530065006300740069006F006E00200031201D00200070006100670065002000310032>
+  /StructParent 22
+  /Contents <FEFF0034002E00320020201C00530065006300740069006F006E00200032201D00200070006100670065002000310031>
 >>
 endobj
 
@@ -39340,8 +39335,8 @@ endobj
   /Border [0 0 0]
   /Dest 1406 0 R
   /F 4
-  /StructParent 25
-  /Contents <FEFF0033002E00320020201C00530065006300740069006F006E00200032201D00200070006100670065002000310032>
+  /StructParent 23
+  /Contents <FEFF0034002E00330020201C0043006F006E0063006C007500730069006F006E201D00200070006100670065002000310031>
 >>
 endobj
 
@@ -39353,8 +39348,8 @@ endobj
   /Border [0 0 0]
   /Dest 1407 0 R
   /F 4
-  /StructParent 26
-  /Contents <FEFF0033002E00330020201C0043006F006E0063006C007500730069006F006E201D00200070006100670065002000310032>
+  /StructParent 24
+  /Contents <FEFF00350020201C00560061006C00690064006100740069006F006E201D00200070006100670065002000310032>
 >>
 endobj
 
@@ -39364,10 +39359,10 @@ endobj
   /Subtype /Link
   /Rect [99.2126 403.39917 496.063 410.63718]
   /Border [0 0 0]
-  /Dest (sec:impl)
+  /Dest 570 0 R
   /F 4
-  /StructParent 27
-  /Contents <FEFF00340020201C0049006D0070006C0065006D0065006E0074006100740069006F006E201D00200070006100670065002000310033>
+  /StructParent 25
+  /Contents <FEFF0035002E00310020201C00530065006300740069006F006E00200031201D00200070006100670065002000310033>
 >>
 endobj
 
@@ -39873,7 +39868,7 @@ endobj
 
 3473 0 obj
 <<
-  /Length 4545
+  /Length 4541
   /Filter /FlateDecode
 >>
 stream
@@ -39914,7 +39909,7 @@ endobj
 
 3475 0 obj
 <<
-  /Length 3567
+  /Length 3842
   /Filter /FlateDecode
 >>
 stream
@@ -39974,13 +39969,9 @@ endobj
 <<
   /Type /Annot
   /Subtype /Link
-  /Rect [285.02206 268.12018 351.55005 282.50818]
+  /Rect [99.2126 261.22717 496.063 268.46515]
   /Border [0 0 0]
-  /A <<
-    /Type /Action
-    /S /URI
-    /URI (https://github.com/hei-templates/hei-synd-report/blob/main/guide-to-typst.pdf)
-  >>
+  /Dest 562 0 R
   /F 4
   /StructParent 59
   /Contents (https://github.com/hei-templates/hei-synd-report/blob/main/guide-to-typst.pdf)
@@ -40114,7 +40105,7 @@ endobj
 <<
   /Type /Annot
   /Subtype /Link
-  /Rect [212.37665 508.68927 225.32364 523.0773]
+  /Rect [99.2126 300.07715 496.063 307.3152]
   /Border [0 0 0]
   /Dest 1451 0 R
   /F 4
@@ -40153,7 +40144,7 @@ endobj
 <<
   /Type /Annot
   /Subtype /Link
-  /Rect [441.2785 490.45126 451.5195 504.83926]
+  /Rect [99.2126 285.68915 496.063 292.9272]
   /Border [0 0 0]
   /Dest 1452 0 R
   /F 4
@@ -40166,7 +40157,7 @@ endobj
 <<
   /Type /Annot
   /Subtype /Link
-  /Rect [161.65067 476.06326 321.86774 490.45126]
+  /Rect [99.2126 271.30115 496.063 278.53918]
   /Border [0 0 0]
   /Dest 1453 0 R
   /F 4
@@ -40205,7 +40196,7 @@ endobj
 
 3489 0 obj
 <<
-  /Length 9562
+  /Length 4526
   /Filter /FlateDecode
 >>
 stream
@@ -41505,7 +41496,7 @@ endobj
 
 3552 0 obj
 <<
-  /Length 1111
+  /Length 1113
   /Filter /FlateDecode
 >>
 stream
@@ -41706,7 +41697,7 @@ endobj
 
 3564 0 obj
 <<
-  /Length 797
+  /Length 290
   /Filter /FlateDecode
 >>
 stream
@@ -41739,7 +41730,7 @@ endobj
 
 3566 0 obj
 <<
-  /Length 885
+  /Length 297
   /Filter /FlateDecode
 >>
 stream
@@ -63751,8 +63742,8 @@ endobj
   /Keywords (Typst, Template, Thesis, HEI-Vs, Systems Engineering)
   /Author (Anastasiia Syvak)
   /Creator (Typst 0.14.2)
-  /ModDate (D:20260602000000Z)
-  /CreationDate (D:20260602000000Z)
+  /ModDate (D:20260603000000Z)
+  /CreationDate (D:20260603000000Z)
 >>
 endobj
 
