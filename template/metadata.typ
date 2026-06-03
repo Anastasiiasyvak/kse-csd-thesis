@@ -38,6 +38,18 @@
     place       : "Kyiv",
     url         : "https://github.com/Anastasiiasyvak",
     signature   : image("resources/img/signature.svg", width:3cm),
+    keywords: (
+      "MovieCrush",
+      "mobile application",
+      "recommendation systems",
+      "collaborative filtering",
+      "ALS",
+      "Gemini",
+      "React Native",
+      "film tracking",
+      "social discovery",
+      "personalization",
+    ),
   ),
 )
 
