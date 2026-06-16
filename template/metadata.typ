@@ -2,8 +2,7 @@
 // Document options
 //
 #let option = (
-  //type : "final",
-  type : "draft",
+  type : "final",
   lang : "en",
   //lang : "de",
   //lang : "fr",
@@ -70,11 +69,6 @@
   affiliation: "KSE",
   name: "Denys Zavhorodnii",
   email: "dzavhorodnii@kse.org.ua",
-)
-#let expert= (
-  affiliation: "KSE",
-  name: "Expert Name",
-  email: "expert@domain.ua",
 )
 #let school= (
   name: none,

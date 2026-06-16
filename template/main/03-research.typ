@@ -2,6 +2,7 @@
 #import "/metadata.typ": *
 #pagebreak()
 = #i18n("analysis-title", lang:option.lang) <sec:analysis>
+#show figure.where(kind: table): set block(breakable: true)
 
 == Research Methodology
 
@@ -18,18 +19,13 @@ MovieCrush, three complementary research methods were used:
   platforms to identify gaps in the market and opportunities for
   differentiation.
 
-All three methods were applied before development began, ensuring that
-product decisions were driven by real user needs and market evidence
-rather than assumptions.
+ All three were applied before development began, so product decisions rested on user and market evidence.
 
 == Business Process Research
 
 === Stakeholder Analysis
 
-Understanding who is affected by MovieCrush and how they interact with
-the product is essential for making the right design decisions. The
-table below outlines the key stakeholders, their interests, influence
-on the project, and the engagement strategy.
+The table below outlines the key stakeholders, their interests, influence, and the engagement strategy.
 
 #figure(
   table(
@@ -95,25 +91,11 @@ easy and every opinion heard.
 
 === Value Proposition
 
-The Value Proposition Canvas below shows the main user problems,
-what users are trying to do, and what MovieCrush offers in response.
-
-#figure(
-  image("/resources/img/discovery/value-proposition.png", width: 100%),
-  caption: [Value Proposition Canvas developed during the discovery phase],
-)
+A Value Proposition Canvas was developed during discovery to map the main user problems, the jobs users are trying to do, and what MovieCrush offers in response (see #ref(<sec:discovery-artifacts>, supplement: "Appendix")).
 
 === Customer Journey
 
-The customer journey map covers five stages: Awareness,
-Consideration, Purchase, Engagement, and Renewal. It shows how
-users find out about MovieCrush, what makes them sign up, and
-what keeps them using it.
-
-#figure(
-  image("/resources/img/discovery/customer-journey.png", width: 100%),
-  caption: [Customer Journey Map - from discovery to long-term retention],
-)
+A customer journey map covers five stages - Awareness, Consideration, Purchase, Engagement, and Renewal - tracing how users discover MovieCrush, what makes them sign up, and what keeps them using it (see #ref(<sec:discovery-artifacts>, supplement: "Appendix")).
 
 == Quantitative Research: User Survey
 
@@ -138,60 +120,25 @@ KSE student community. To motivate respondents, 4 cinema tickets were
 raffled among participants - 2 winners, 2 tickets each for any film
 and any date of their choice.
 
-#figure(
-  image("../resources/img/survey/slack-announcement.png", width: 90%),
-  caption: [Survey announcement in KSE Slack]
-)
+The announcement generated strong engagement - 43 reactions, well above the 2-6 typical for KSE Slack posts - and both winners later confirmed receipt of their cinema tickets. The announcement, community reactions, and winner confirmations are shown in #ref(<sec:survey-materials>, supplement: "Appendix").
 
-The announcement generated strong engagement - 43 reactions, which is
-significantly higher than typical KSE Slack posts that receive 2-6.
-
-#figure(
-  image("../resources/img/survey/reactions.png", width: 40%),
-  caption: [Community reactions - 43 emoji responses to the announcement]
-)
-
-Both winners were contacted and confirmed receipt of their cinema tickets.
-
-#figure(
-  image("../resources/img/survey/winners.png", width: 90%),
-  caption: [Winner confirmation messages]
-)
+The charts for each block are collected in #ref(<sec:additional-charts>, supplement: "Appendix").
 
 === Demographics
 
 The survey collected 262 responses. The majority of respondents -
-*90.5%* - were aged 18-24, which reflects the author's social circle
-and the primary target audience for MovieCrush. *82.7%* have active
-streaming subscriptions, confirming high purchasing power and an
-established habit of paying for digital content.
-
-#figure(
-  image("../resources/img/survey/age-distribution.png", width: 80%),
-  caption: [Age distribution of survey respondents]
-)
+*90.5%* - were aged 18-24, which matches both the distribution channel (the KSE community) and the primary target audience for MovieCrush. *82.7%* have active streaming subscriptions, a sign of purchasing power and a paying habit.
 
 In terms of content language, *42.4%* consume content in a mix of
 Ukrainian and English, *36.3%* primarily in Ukrainian, and *21.4%*
 in English only - confirming that the app must support both languages.
-Some respondents mentioned russian-language content. The author's
-position is clear: russian will not be supported. MovieCrush targets
+Some respondents mentioned russian-language content. But my position is clear: russian will not be supported. MovieCrush targets
 Ukraine, Europe, and the US - not the CIS market.
-
-#figure(
-  image("../resources/img/survey/content-language.png", width: 80%),
-  caption: [Language in which respondents consume film content]
-)
 
 === Viewing Habits & Pain Points
 
 *43.1%* of respondents watch 2-5 films or series per week - the core
 active audience that needs tools for tracking and recommendations.
-
-#figure(
-  image("../resources/img/survey/viewing-frequency.png", width: 80%),
-  caption: [Average number of films or series watched per week]
-)
 
 When asked how they currently track films, *49.8%* said they use phone
 notes - a clear signal that no proper tool exists. Only 19.8% use
@@ -200,11 +147,6 @@ or poor fit with existing solutions. Additionally, 7.6% use TikTok or
 Instagram to save films - a new behavioral pattern no existing app
 addresses. 24.9% do not track films at all, representing untapped
 latent demand.
-
-#figure(
-  image("../resources/img/survey/tracking-habits.png", width: 90%),
-  caption: [How respondents currently track films they want to watch or have watched]
-)
 
 === Competitor Pain Points
 
@@ -226,17 +168,10 @@ These became the foundation for MovieCrush's core feature set.
 === Where Users Look for Recommendations
 
 *83.6%* of respondents look for recommendations on social media
-(Instagram, TikTok, Twitter), and *76%* rely on friends. Only *7.3%*
-use specialized apps like Letterboxd or TV Time. This confirms that
-existing platforms are failing at discovery.
-
-#figure(
-  image("../resources/img/survey/recommendation-sources.png", width: 90%),
-  caption: [Where respondents usually look for recommendations on what to watch]
-)
+(Instagram, TikTok, Twitter), and *76%* rely on friends. Only *7.3%* use specialized apps like Letterboxd or TV Time - existing platforms are failing at discovery.
 
 *58%* actively discuss films with friends and family, and *37%* do so
-occasionally - confirming strong demand for social features.
+occasionally - strong demand for social features.
 
 === Feature Validation
 
@@ -246,32 +181,15 @@ statistics/Wrapped* (35.9%). Social features like Soulmate (14.5%)
 showed lower willingness to pay but high viral potential - making them
 a strong fit for the free tier.
 
-#figure(
-  image("../resources/img/survey/willingness-to-pay-features.png", width: 90%),
-  caption: [Features respondents would be willing to pay for separately]
-)
+During the survey, the planned feature was described as an "AI assistant". In the final implementation it became a hybrid system combining @als, TMDB Discover, and Gemini re-ranking - a more technically sound solution to the same need.
 
-It is worth noting that during the survey, the planned feature was
-described as an "AI assistant." In the final implementation, this became
-a hybrid recommendation system combining ALS collaborative filtering
-with TMDB Discover for candidate generation, and Gemini for re-ranking -
-a more technically sound solution to the same user need.
-
-The personal statistics feature (Wrapped) received an average rating
-of *4.24 out of 5* - the highest of all features tested. Full rating
-distribution is available in the Appendix.
+The personal statistics feature (Wrapped) received an average rating of *4.24 out of 5* - the highest of all features tested.
 
 === Social Features
 
 When asked which social feature mattered most, *48.9%* chose seeing
 what their friends are watching and rating. *38.5%* wanted shared
-lists, and *35.1%* wanted to compare tastes with friends. This
-strongly validates the social layer of MovieCrush.
-
-#figure(
-  image("../resources/img/survey/social-features.png", width: 90%),
-  caption: [Most important social features according to respondents]
-)
+lists, and *35.1%* wanted to compare tastes with friends.
 
 === Monetization Insights
 
@@ -279,20 +197,10 @@ strongly validates the social layer of MovieCrush.
 the freemium model. *23.3%* said ads would bother them even in a free
 version - this segment is the guaranteed base for premium conversion.
 
-#figure(
-  image("../resources/img/survey/ads-attitude.png", width: 80%),
-  caption: [Respondent attitude toward ads in the app]
-)
-
 On pricing, *75.5%* of respondents would consider paying 3 USD or more
 per month for a premium package including AI recommendations, extended
 statistics, Soulmate search, and no ads. Only *9.9%* said they would
 not pay at all.
-
-#figure(
-  image("../resources/img/survey/pricing.png", width: 80%),
-  caption: [Maximum monthly price respondents would consider for a premium subscription]
-)
 
 === Open-ended Responses
 
@@ -404,8 +312,7 @@ an app, almost every respondent mentioned filters:
 
 *A successful recommendation creates a strong emotional reaction.* When
 asked how they feel after finding the perfect film, respondents used
-words like "euphoria" and "delight" - confirming that the emotional
-payoff of a good recommendation is significant.
+words like "euphoria" and "delight" - the emotional payoff of a good recommendation is real.
 
 === User Persona
 
@@ -442,9 +349,7 @@ The interviews directly shaped the following product decisions:
 
 === Overview of Existing Solutions
 
-The competitive landscape for film tracking apps includes four main
-players, each with a distinct approach and clear limitations that
-MovieCrush addresses.
+The competitive landscape includes four main players, each with clear limitations.
 
 ==== Letterboxd
 #link("https://app.notion.com/p/Letterboxd-2e9197e7fb16815cb0d4e748e367a8ed")[Full analysis with screenshots]
@@ -515,18 +420,11 @@ other markets. Annual revenue is estimated at 50,000-60,000 USD.
   caption: [Key metrics comparison across competing platforms]
 )
 
-#figure(
-  image("/resources/img/competitors/appmagic-comparison.png", width: 100%),
-  caption: [Featuring Score and chart rankings across four competitors,
-  Jan 2021 - Jan 2026 (AppMagic). Letterboxd leads in Featuring Score
-  with 3.3M, while Moviebase scores just 65 - reflecting the large
-  gap in platform visibility and store promotion.],
-)
+Platform visibility data from AppMagic (Jan 2021 - Jan 2026) reflects the same gap: Letterboxd leads with a Featuring Score of 3.3M, while Moviebase scores just 65 @appmagic (see #ref(<sec:appmagic>, supplement: "Appendix")).
 
 === Competitor Gap Analysis
 
-The table below summarizes the key weaknesses identified in competing
-platforms and how MovieCrush addresses each of them.
+The table below maps each competitor's key weaknesses to how MovieCrush addresses them.
 
 #figure(
   table(
@@ -604,13 +502,13 @@ platforms and how MovieCrush addresses each of them.
 == Research Limitations
 
 #warningbox()[
-  These results reflect a non-representative sample - 89.9% of respondents
+  These results reflect a non-representative sample - 90.5% of respondents
   were aged 18-24. We found *Product-Segment Fit*, not full Product Market Fit.
 ]
 
 The following limitations should be considered when interpreting these results:
 
-+ *Non-representative sample* - 89.9% of respondents were aged 18-24,
++ *Non-representative sample* - 90.5% of respondents were aged 18-24,
   which correlates with the author's age and social circle.
 + *Narrow demographic* - results reflect the views of students in
   technical and economic fields only.
@@ -733,8 +631,7 @@ against the core idea of MovieCrush as a user-first platform.
 
 === Value Chain
 
-Understanding who contributes value in the film tracking domain helps
-clarify MovieCrush's dependencies and strategic position.
+The value chain below shows MovieCrush's dependencies and strategic position.
 
 #figure(
   table(
@@ -765,32 +662,11 @@ clarify MovieCrush's dependencies and strategic position.
 Building a film tracking platform involves several domain-specific
 technical challenges that shaped architectural decisions in MovieCrush:
 
-- *AI recommendation complexity:* Unlike music, where taste is often
-  genre-based, cinematic taste is *multimodal* - a person may love a
-  specific director, cinematographer, actor, atmosphere, or even sound
-  design rather than a genre. This makes building a recommendation model
-  significantly harder. MovieCrush addresses this with a hybrid approach:
-  ALS collaborative filtering learns from behavioral patterns across
-  users and has priority as the main source of candidates. TMDB Discover
-  serves as an additional candidate source. Google Gemini then re-ranks
-  the combined pool based on the individual user's watch history and
-  ratings - capturing taste signals that a simple genre filter cannot.
+- *AI recommendation complexity.* Cinematic taste is multimodal - a person may love a director, actor, or atmosphere rather than a genre - which a simple genre filter cannot capture. MovieCrush addresses this with a hybrid ALS + Discover + Gemini pipeline (see @sec:algorithms).
 
-- *Cold start problem:* New users have no watch history, making
-  collaborative filtering impossible. MovieCrush solves this with a
-  dedicated onboarding flow: users select favorite actors, then receive
-  a curated set of films which they mark as watched or not watched and
-  rate. The system analyzes content type and genre signals from these
-  ratings to seed initial recommendations via TMDB Discover.
+- *Cold start.* New users have no watch history for collaborative filtering. An onboarding flow collects favorite actors and ratings to seed initial recommendations (see @sec:algorithms).
 
-- *TMDb caching for analytics:* MovieCrush maintains a local PostgreSQL
-  cache of TMDb metadata (title, poster, genres, cast, director) that is
-  populated when a user marks a film as watched or adds a rating. This
-  cache is used for Wrapped statistics and recommendation building to
-  avoid excessive TMDb API calls during computation-heavy operations.
-  For regular browsing, the app fetches data directly from TMDb with a
-  short-lived in-memory LRU cache to reduce redundant requests within
-  the same session.
+- *TMDb caching for analytics.* A local PostgreSQL cache of TMDb metadata avoids excessive API calls during Wrapped and recommendation building; regular browsing uses a short-lived in-memory LRU cache.
 
 === Legal & Economic Constraints
 

@@ -9,7 +9,7 @@ MovieCrush was built over three months in an iterative way, split into three spr
 
 === Initial Presentation - Discovery Phase
 
-Before any coding started, a detailed product presentation was prepared. It became the foundation for all decisions that followed. At this stage the following was completed:
+Before any coding started, a detailed product presentation was prepared. At this stage the following was completed:
 
 - Vision and Mission of the product
 - Goals and reasoning for why the idea is promising
@@ -36,13 +36,13 @@ Deliverables set for Sprint 1:
 
 The main outcome of this sprint was a large quantitative study: a survey of 262 respondents distributed through the KSE Slack community. It measured demand for product features, willingness to pay, and current pain points of the target audience. After analyzing the data, charts, and conclusions for each feature - AI recommendations, Wrapped, Soulmate, detailed ratings - Product-Segment Fit was confirmed for the 18-24 age group.
 
-In parallel, data modeling was completed: 26 tables were designed with data types, sizes, and constraints defined, entity relationships and join tables were built (movie_genres, movie_countries). Load was estimated across three growth scenarios, and the 1-9-90 rule was applied to the comments table. Total database size at full load was estimated at ~6.4 GB. RPS was also calculated for conservative, realistic, and optimistic scenarios.
+In parallel, data modeling was completed: 26 tables were designed with data types, sizes, and constraints defined, entity relationships and join tables were built (movie_genres, movie_countries). Load was estimated across three growth scenarios, and the 90/9/1 rule was applied to the comments table. Total database size at full load was estimated at ~6.4 GB. RPS was also calculated for conservative, realistic, and optimistic scenarios.
 
-An important decision made during this sprint was the approach to AI recommendations. Three services were reviewed - OpenAI, DeepSeek, and Hugging Face Inference API - along with two recommendation strategies: Embedding API + similarity and LLM generation. DeepSeek was selected as the external AI service, and the idea of an in-app AI chat (similar to ChatGPT but limited to film topics) was dropped in favor of a single AI assistant button that generates personalized recommendations.
+AI recommendations were also scoped this sprint. Three services were reviewed - OpenAI, DeepSeek, and Hugging Face Inference API - along with two recommendation strategies: Embedding API + similarity and LLM generation. DeepSeek was selected as the external AI service, and the idea of an in-app AI chat (similar to ChatGPT but limited to film topics) was dropped in favor of a single AI assistant button that generates personalized recommendations.
 
 A preliminary tech stack was defined (Redis for caching, DeepSeek API, AWS for deployment) along with initial architecture diagrams. Both the stack and the diagrams changed significantly during implementation - this is covered in the relevant sections.
 
-*Retrospective:* No coding was done in this sprint intentionally - the priority was solid research and architecture planning. The number of database tables changed between planning and implementation: from 26 designed to 17 built, as some tables turned out to be unnecessary or were replaced by a different approach (for example, a separate movies table was replaced by the tmdb_media_cache strategy).
+*Retrospective:* No coding was done in this sprint intentionally - the priority was solid research and architecture planning. The number of database tables changed between planning and implementation: from 26 designed to 18 built, as some tables turned out to be unnecessary or were replaced by a different approach (for example, a separate movies table was replaced by the tmdb_media_cache strategy).
 
 Deliverables set for Sprint 2:
 - Stack setup
@@ -59,27 +59,13 @@ Deliverables set for Sprint 2:
 
 *What was done:*
 
-*Authentication.* A full auth flow was built: registration with validation (username, password, optional first and last name), email confirmation, login, and password recovery via email. Validation runs on the frontend before any request is sent; errors appear under each field individually using a touched state. On the backend, passwords are compared using bcrypt - even if the user does not exist, the comparison still runs against a dummy hash to prevent timing attacks. After a successful login, the accessToken and refreshToken are saved and navigation fully resets to Home so the user cannot go back.
+*Authentication.* A full auth flow was built: registration with field validation, email confirmation, login, and password recovery. Validation runs on the client before any request, with per-field errors shown on a touched state. On the backend, bcrypt verifies passwords, and the comparison always runs - against a dummy hash even when the user does not exist - so account existence is not leaked through response timing. After login, the access and refresh tokens are stored and navigation resets to Home, so the user cannot return into the auth flow.
 
-*Home Screen.* A header with the MovieCrush logo and a button to go to the user's profile, a footer for tab navigation. Four horizontal content rows: Trending Movies This Week, Trending Series This Week, Upcoming, and Top Rated All Time. Each row is a separate component that takes a title, a data array, and a type (movie or tv) and renders a horizontal FlatList with the first 10 items. Four TMDB requests run in parallel via Promise.all when the screen mounts - no repeated requests when navigating back.
+*Core screens.* The main screens - Home, Search, Movie, Series, Person, Profile, Settings, and the cold-start Recommendation screen - were implemented; their layout and visuals are covered in the UX section and the screen gallery (@sec:screen-gallery). A few implementation details are worth noting: search uses a 500 ms debounce with a 2-character minimum, and the Home and Movie screens fetch all their data in parallel via `Promise.all`, so returning to a screen triggers no refetch. When a movie page opens, its TMDB data - details, cast, gallery, videos, and similar titles - is fetched together with the user's own rating and list state in a single batched request.
 
-*Search.* Live search with 500ms debounce and a minimum of 2 characters. Three tabs: All, Media, and Cast - switching tabs automatically restarts the search. User search was added in the next sprint.
+*Data protection.* Every state-changing request passes through `authMiddleware`, which returns 401 without a valid access token and rejects refresh tokens on protected endpoints. Ownership is enforced at the query level - deleting a custom list, for example, checks both the list ID and that it belongs to the current user.
 
-*Movie Screen.* Poster, title, IMDb rating, adding to lists (Watched /Watchlist/Favorite/custom), dislike, movie details, trailer link, gallery of film stills, cast with links to actor pages, similar movies. Comments system: signed or anonymous, with or without spoilers, like/dislike, editing and deleting own comments. Rating system: overall score (1-10), detailed score across five criteria, mood after watching, best actor pick, and rating reset. When a movie page opens, four TMDB requests run in parallel: main info, cast, gallery, and similar movies.
-
-*Series and Episode Screen.* Same as Movie Screen plus season and episode counts. Each season can be expanded to show its description and episode list. Each episode can be opened to view details, be marked as watched, and receive a rating. The series status is shown: ongoing, finished, or cancelled.
-
-*Person Screen.* Photo, name, place and date of birth, age, biography with read more / read less, filmography with Acting and Crew tabs and links to each title, and known-as names.
-
-*Profile Screen.* Photo, username, full name, registration date, linked Telegram and Instagram, counters for friends, followers, following, watched movies, series, and episodes. Default and custom lists with the ability to view contents, remove movies, manage privacy, and delete non-default lists.
-
-*Settings Screen.* Change username, name, and password. Link Instagram and Telegram. Toggle consent for the Soulmate feature. Log out and delete account.
-
-*Recommendation Screen.* Cold start recommendations using the TMDB /discover endpoint with filters for genre, year, country, and rating. If multiple content types are selected (movies + series), requests run in parallel via Promise.all and results are merged without duplicates. A "New batch" button changes the seed to load the next batch of results.
-
-*Data protection.* Every request that changes data goes through authMiddleware - without a valid token the server returns 401 Unauthorized. When deleting a list, the server checks not just the list ID but also that it belongs to the current user
-
-*Content storage.* Movies are not stored in the database - only the tmdb_id. Details are fetched from TMDB on demand.
+*Content storage.* The movie catalog is not duplicated in the database - only `tmdb_id` references are stored, and full metadata is fetched from TMDB on demand and cached.
 
 *Retrospective:* Following other users was not finished in this sprint and was moved to Sprint 3 as a priority. It also became clear that DeepSeek would not work for AI recommendations - the committee pointed out that the model could ignore a large prompt or return irrelevant results. Finding an alternative became a task for the next sprint.
 
@@ -98,28 +84,25 @@ Deliverables set for Sprint 3:
 
 *Social Features / Follows.* A full follower model was built: following and unfollowing other users, viewing their public and default lists, and mutual follow status (friends). When two users are friends, their Instagram or Telegram contacts can optionally be visible to each other. Users can be found through the global search. On movie, series, and episode pages, ratings from followed users are now shown.
 
-*Soulmate.* A feature that finds the user with the most similar taste. Participation is opt-in - controlled in Settings. The algorithm filters eligible candidates (active accounts, with consent, at least 5 watched movies), computes a similarity score for each one, and saves the best match to the user_soulmate_matches table if the score is above the minimum threshold. Recompute is available once per day.
+*Soulmate.* An opt-in feature (toggled in Settings) that finds the user with the most similar film taste. The weighted five-metric scoring, eligibility filtering, and the once-per-day recompute are described in full in @sec:algorithms; this sprint delivered the feature end to end, from candidate filtering to the result UI.
 
 *MovieCrush Wrapped.* Personalized yearly statistics: total watch time, number of movies, series, and episodes, top genre, top director, top actors, most common mood after watching, typical watch time (cinema ritual), and time spent with the favorite actor. Calculations use cached metadata from tmdb_media_cache - no TMDB requests are needed at generation time. Regeneration is available once per day for testing purposes.
 
-*AI Recommendations - New approach.* During this sprint, a research study was done: 9 models were tested with 5 different prompts each - Claude Opus 4.7, Claude Haiku 4.7, Claude Sonnet 4.6, GPT 5.4, GPT 5.4 mini, GPT 5.5, Gemini Flash, Gemini Pro, and Gemini Thinking. The prompt design was informed by two papers: GroupLens 2024 recommended passing up to 75 movies with ratings and is_liked/is_disliked flags, and using a composition rule for result categories (strong_match, diversity, hidden_gem). NEC 2025 showed that prompt structure matters more than model choice, and that cheaper models like Gemini Flash give comparable quality at ~90% lower cost.
+*AI Recommendations - New approach.* During this sprint, a research study was done: 9 models were tested with 5 different prompts each - Claude Opus 4.7, Claude Haiku 4.7, Claude Sonnet 4.6, GPT 5.4, GPT 5.4 mini, GPT 5.5, Gemini Flash, Gemini Pro, and Gemini Thinking. The prompt design was informed by two papers: @sun2024grouplens recommended passing up to 75 movies with ratings and is_liked/is_disliked flags, and using a composition rule for result categories (strong_match, diversity, hidden_gem). @kusano2025prompt showed that prompt structure matters more than model choice, and that cheaper models like Gemini Flash give comparable quality at ~90% lower cost.
 
 The full model comparison, prompt designs, and per-model outputs are documented at: #link("https://app.notion.com/p/AI-recommendations-34d197e7fb1680f484f0fedc52ee2909")[AI Recommendations Research - Notion].
 
 However, the committee raised concerns about a purely LLM-based approach: the model couldn't return art-house picks, get lost in a long prompt, or miss context when given many movies. This led to the decision to move to a hybrid pipeline with collaborative filtering.
 
-*CF Service - New recommendation engine.* A separate Python microservice on FastAPI was built with an ALS model from the implicit library. The model is trained on a user-item interaction matrix (views, ratings, favorites) with BM25 weighting. Gemini stayed in the final architecture but in a different role - not as the main recommendation source, but as a re-ranker: it receives candidates from ALS and TMDB Discover and picks the 15 best ones with a category label (strong_match, diversity, hidden_gem).
-
-For new users without enough watch history, an Onboarding flow was added: users pick favorite actors and movies at the start, and initial recommendations are served through TMDB Discover based on those signals until enough data is collected for ALS.
+*CF Service - New recommendation engine.* A separate Python/FastAPI microservice was built around an ALS collaborative-filtering model, with Gemini repurposed from the main recommendation source into a re-ranker over a pre-filtered candidate pool. An onboarding flow was added to collect initial signals (favorite actors and movies) so new users get recommendations until ALS has enough data. The full three-stage pipeline and the cold-start path are detailed in @sec:algorithms; this sprint delivered the working end-to-end implementation.
 
 *Retrospective:* Several planned deliverables were intentionally not built - after reviewing survey results, the top priorities were clear: Wrapped (rated 4.24/5), AI recommendations, and social features. Not implemented: Challenges, Instagram share templates, language switch, PDF export, and premiere push notifications. These are planned for future development.
-  
 
 == UX Design
 
 === Design Philosophy
 
-MovieCrush uses a dark theme as the only design option. This was a deliberate choice - film posters are colorful by nature, and a dark background makes them stand out without competing visual noise. All screens share the same color palette, typography, and spacing system, which creates a consistent feel as the user moves through the app.
+MovieCrush uses a dark theme as the only design option. This was a deliberate choice - film posters are colorful by nature, and a dark background makes them stand out without competing visual noise. All screens share the same color palette, typography, and spacing system for a consistent feel.
 
 === Visual Identity
 
@@ -136,68 +119,28 @@ MovieCrush uses a dark theme as the only design option. This was a deliberate ch
 
 === Screen Overview
 
-#figure(
-  image("/resources/img/screens/onboarding.png", width: 70%),
-  caption: [Onboarding - actor selection, movie swipe cards, and optional ratings],
-)
-
-The Onboarding flow runs once when a new user signs up and serves as the foundation for cold start recommendations. It has three steps. First, the user picks favorite actors from a curated grid. Second, a swipe card interface shows popular movies, series, anime, and cartoons one by one - the user swipes right if they have seen it or left if not, or uses the buttons below. If a user has not seen anything in the first batch, a second batch of 20 different titles is shown automatically to ensure at least some signal is collected. Third, for every title marked as watched, the user can optionally leave a star rating. All of this data feeds directly into the cold start recommendation engine.
+The three screens below carry the core experience. The remaining screens - Onboarding, Home, Search, Series, Profile, and Actor - are collected in the screen gallery (#ref(<sec:screen-gallery>, supplement: "Appendix")).
 
 #figure(
-  image("/resources/img/screens/home.png", width: 30%),
-  caption: [Home Screen - trending movies and series, search bar, bottom navigation],
+  image("/resources/img/screens/movie.png", width: 60%),
+  caption: [Movie Screen - hero backdrop, action bar, Info and Rate tabs],
 )
 
-The Home Screen is the entry point of the app. It shows four horizontal content rows fetched from TMDB: Trending Movies This Week, Trending Series This Week, Upcoming, and Top Rated All Time. The MovieCrush logo in pink sits in the top left, with a profile avatar button on the right. The bottom navigation bar has three tabs: Discover, For You, and Challenges.
+The Movie Screen is the heart of the app: a full-width backdrop with the poster overlaid, four quick actions (Favorite, Watchlist, Watched, Dislike), and two tabs - Info (details, trailer, gallery, cast, similar titles, comments) and Rate.
 
 #figure(
-  image("/resources/img/screens/search.png", width: 70%),
-  caption: [Search Screen - live search with All, Media, Cast, and Users tabs],
+  image("/resources/img/screens/ratings.png", width: 60%),
+  caption: [Rate tab - star score, 5-criteria breakdown, mood picker, best performance],
 )
 
-The Search Screen activates from the search bar on the Home Screen. Results are shown in a 3-column poster grid with ratings and year. Four filter tabs let the user switch between All, Media, Cast, and Users results.
+The Rate tab carries the full rating system: a 10-star overall score, a breakdown across five criteria (Direction, Script, Visuals, Soundtrack, Acting - each 1-5), a six-option mood picker, and a Best Performance vote.
 
 #figure(
-  image("/resources/img/screens/movie.png", width: 70%),
-  caption: [Movie Screen - hero backdrop, action bar, info tab, cast, comments],
+  image("/resources/img/screens/wrapped_soulmate.png", width: 60%),
+  caption: [Challenges Screen - Soulmate result and Wrapped yearly stats],
 )
 
-The Movie Screen opens with a full-width backdrop image at the top, with the poster overlaid in the bottom-left corner. Below the hero are four quick actions: Favorite, Watchlist, a large Watched button, and Dislike. Two tabs - Info and Rate - split the movie details from the rating interface. The Info tab shows runtime, director, writers, year, genre, country, overview, trailer link, gallery, cast with links to actor pages, similar movies, and a comments section. Comments can be signed or anonymous, with or without a spoiler warning.
-
-#figure(
-  image("/resources/img/screens/ratings.png", width: 70%),
-  caption: [Rate tab - star rating, detailed 5-criteria score, mood picker, and best performance],
-)
-
-The Rate tab shows a 10-star rating input, a detailed breakdown across five criteria (Direction, Script, Visuals, Soundtrack, Acting - each rated 1-5), a mood picker with six options (Happy, Inspired, Scared, Sad, Thoughtful, Excited), and a Best Performance section where the user votes for the standout actor.
-
-#figure(
-  image("/resources/img/screens/series.png", width: 70%),
-  caption: [Series Screen - series info, mark all episodes dialog, and season episode list],
-)
-
-The Series Screen follows the same structure as the Movie Screen with additional season and episode tracking. When marking a series as watched, a dialog asks whether to mark just the series or all individual episodes as well. Each season can be expanded to show individual episodes with their air date, runtime, TMDB rating, and a short description. Each episode can be marked as watched separately. An episode page shows details and allows the user to leave a rating just for that episode.
-
-#figure(
-  image("/resources/img/screens/wrapped_soulmate.png", width: 70%),
-  caption: [Challenges Screen, Soulmate result, and Wrapped yearly stats],
-)
-
-The Challenges Screen is the entry point for two signature features. The Soulmate card launches the matching algorithm and shows the result: the matched user's profile, a compatibility percentage, and a breakdown of why they match - with gold progress bars for Ratings, Watched, and Actors similarity. The Wrapped feature presents a series of full-screen gradient slides inspired by Spotify Wrapped, each focusing on one personal stat: top genre, top director, top actors with vote counts, and more.
-
-#figure(
-  image("/resources/img/screens/profile.png", width: 30%),
-  caption: [Profile Screen - avatar, social stats, content counters, and movie lists],
-)
-
-The Profile Screen shows the user's avatar with a gold ring border, username in pink, full name, membership date, and optional Instagram button. Three counters show social stats (Friends, Followers, Following) and three more show content stats (Movies, Series, Episodes watched). Below are the user's lists in a scrollable tab layout: Watched, Favorites, Watchlist, and custom lists.
-
-#figure(
-  image("/resources/img/screens/actor.png", width: 30%),
-  caption: [Actor Screen - bio, Acting and Crew filmography tabs],
-)
-
-The Actor Screen shows a gold-bordered portrait photo, key facts (gender, birth date, birthplace, age), a biography, and a filmography split into Acting and Crew tabs. Each filmography item is a poster card with a rating badge and a link to the title's page.
+The Challenges Screen hosts the two signature features. Soulmate shows the matched user with a compatibility percentage and a per-metric breakdown; Wrapped presents Spotify-style full-screen slides for top genre, director, actors, and more.
 
 === Design Decisions
 
@@ -205,11 +148,11 @@ The Actor Screen shows a gold-bordered portrait photo, key facts (gender, birth 
 
 *Logo concept.* The logo ideas are documented at: #link("https://app.notion.com/p/Ideas-of-logo-2e9197e7fb1680369452e55c023d6a7c")[Logo Ideas - Notion].
 
-*Dark theme only.* A light theme was considered but dropped. The app is used primarily in evening and low-light settings, and movie poster art looks significantly better on a dark background.
+*Dark theme only.* A light theme was considered but dropped - the app is used mostly in low-light settings, and poster art reads better on a dark background.
 
 *Emoji as visual language.* Section headers and filter chips use emoji alongside text labels. This was a deliberate choice to keep the interface feeling friendly and expressive rather than corporate - consistent with the target audience of 18-24 year olds.
 
-== Key Algorithms
+== Key Algorithms <sec:algorithms>
 
 === Soulmate Similarity Algorithm
 
@@ -219,13 +162,13 @@ The Soulmate feature finds the user whose film taste is closest to yours. The al
 
 Each metric measures a different dimension of taste overlap and uses a different mathematical technique suited to the nature of the data.
 
-*Metric 1 - Rating Cosine Similarity (weight: 0.45).* This is the strongest signal. For every movie both users have rated, the algorithm builds two parallel numeric vectors and computes cosine similarity between them. The key insight is that cosine similarity measures the angle between vectors rather than their magnitude - so a user who consistently rates 9/10 and a user who rates 7/10 for the same films can still show high similarity if their relative preferences match. A minimum overlap of 3 jointly rated movies is required before this metric is computed - below that threshold, the score defaults to 0.
+*Metric 1 - Rating Cosine Similarity (weight: 0.45).* This is the strongest signal. For every movie both users have rated, the algorithm builds two parallel numeric vectors and computes cosine similarity between them: a user who consistently rates 9/10 and a user who rates 7/10 for the same films still show high similarity if their relative preferences match. A minimum overlap of 3 jointly rated movies is required - below that, the score defaults to 0.
 
-*Metric 2 - Watched Overlap / Jaccard (weight: 0.22).* Measures what share of total watched titles both users have in common. Jaccard similarity divides the size of the intersection by the size of the union of both watch lists, so the score naturally accounts for users with very different library sizes - a user with 10 watched movies and a user with 200 are compared fairly.
+*Metric 2 - Watched Overlap / Jaccard (weight: 0.22).* Measures what share of total watched titles both users have in common, so the score naturally accounts for users with very different library sizes - a user with 10 watched movies and a user with 200 are compared fairly.
 
-*Metric 3 - Actor Overlap / Jaccard (weight: 0.16).* Each time a user rates a movie, they can vote for the best actor in that film. This metric computes Jaccard similarity between the two users' sets of voted actors - capturing a deeper layer of taste alignment that goes beyond genre preferences.
+*Metric 3 - Actor Overlap / Jaccard (weight: 0.16).* Each time a user rates a movie, they can vote for the best actor in that film. This metric computes @jaccard similarity between the two users' sets of voted actors - capturing a deeper layer of taste alignment that goes beyond genre preferences.
 
-*Metric 4 - Mood Cosine Similarity (weight: 0.11).* After watching a film, users select a mood: Happy, Inspired, Scared, Sad, Thoughtful, or Excited. Each user's mood history is treated as a frequency vector - how many times each mood was selected - and cosine similarity is computed across the shared mood space. Two users who consistently feel the same emotions after watching the same types of films are considered more compatible.
+*Metric 4 - Mood Cosine Similarity (weight: 0.11).* After watching a film, users select a mood: Happy, Inspired, Scared, Sad, Thoughtful, or Excited. Each user's mood history is treated as a frequency vector - how many times each mood was selected - and @cosine is computed across the shared mood space. Two users who consistently feel the same emotions after watching the same types of films are considered more compatible.
 
 *Metric 5 - Disliked Overlap / Jaccard (weight: 0.06).* Shared dislikes are a weak but real signal - if two users consistently dislike the same films, their tastes are likely to align in the opposite direction as well. Jaccard similarity is computed on each user's set of disliked titles.
 
@@ -259,29 +202,29 @@ The recommendation system is a three-stage pipeline: collaborative filtering gen
 
 ==== Stage 1 - ALS Collaborative Filtering (Python CF Service)
 
-The CF service is a separate Python microservice on FastAPI. It trains an ALS (Alternating Least Squares) model from the `implicit` library on a user-item interaction matrix built directly from the PostgreSQL database.
+The CF service is a separate Python microservice on FastAPI. It trains an ALS model from the `implicit` library @frederickson2022implicit on a user-item interaction matrix built directly from the PostgreSQL database.
 
-*Interaction matrix construction.* Each user-movie interaction is converted to a preference score that reflects the strength of the signal. Adding a movie to favorites scores highest (5.0), followed by high ratings (4.0 for 8+, 3.0 for 6-7, 2.0 for 4-5), then watchlist additions (1.5), and finally movies that were only marked as watched without a rating (1.0). The resulting matrix is stored in scipy CSR (Compressed Sparse Row) format - since most user-item pairs have no interaction at all, a sparse representation keeps memory usage low.
+*Interaction matrix construction.* Each user-movie interaction is converted to a preference score that reflects the strength of the signal. Adding a movie to favorites scores highest (5.0), followed by high ratings (4.0 for 8+, 3.0 for 6-7, 2.0 for 4-5), then watchlist additions (1.5), and finally movies that were only marked as watched without a rating (1.0). The resulting matrix is stored in scipy @csr format - since most user-item pairs have no interaction at all, a sparse representation keeps memory usage low.
 
-*BM25 weighting.* Before training, BM25 weighting is applied to the matrix. BM25 is a technique from information retrieval that normalizes interaction counts - it prevents users with very large watch histories from dominating the model's learned representations and ensures that less active users still contribute meaningfully to the training signal.
+*BM25 weighting.* Before training, @bm25 weighting @robertson2009bm25 is applied to the matrix so that users with very large watch histories do not dominate the model's learned representations, while less active users still contribute meaningfully to the training signal.
 
-*Model training.* The ALS model learns latent factor representations for both users and items by alternately solving for user factors and item factors while keeping the other fixed - this is the "alternating" part of ALS. The model parameters (factors=24, iterations=30, regularization=1.0, alpha=20.0) were selected through a grid search optimizing Hit Rate10 and MRR (Mean Reciprocal Rank). The trained model and index mappings are saved to disk so that inference does not require retraining on every request.
+*Model training.* The ALS model learns latent factor representations for both users and items by alternately solving for user factors and item factors while keeping the other fixed. @hu2008collaborative The model parameters (factors=24, iterations=30, regularization=1.0, alpha=20.0) were selected through a grid search optimizing Hit Rate\@10 and @mrr. The trained model and index mappings are saved to disk so that inference does not require retraining on every request.
 
 *Inference.* At request time, the model computes a score for every item the user has not yet interacted with and returns the top N candidates as TMDB IDs. Already watched and disliked titles are filtered out before returning results.
 
 ==== Stage 2 - TMDB Discover Candidates
 
-ALS only recommends items that were present in the training matrix. To add variety and cover cases where a user's taste is unusual or their history is small, a second candidate source is built from the TMDB Discover API. The system builds a user profile from watch history - top 3 genre IDs, top voted actor, and allowed content buckets (movie, tv, anime, dorama, animation) - and fires parallel Discover requests for each content type the user has shown interest in. Results are deduplicated and merged into a single candidate pool, each item tagged with its source (ALS or Discover).
+ALS only recommends items that were present in the training matrix. To add variety and cover cases where a user's taste is unusual or their history is small, a second candidate source is built from the TMDB Discover API @tmdb. The system builds a user profile from watch history - top 3 genre IDs, top voted actor, and allowed content buckets (movie, tv, anime, dorama, animation) - and fires parallel Discover requests for each content type the user has shown interest in. Results are deduplicated and merged into a single candidate pool, each item tagged with its source (ALS or Discover).
 
 ==== Stage 3 - Gemini Re-ranking
 
-The tagged candidate pool is sent to Google Gemini 2.5 Flash along with a sample of the user's watch history and ratings. Gemini selects the 15 best titles from the pool and assigns each a category: *strong_match* (clearly fits the user's established taste), *diversity* (different from usual but plausibly enjoyable), or *hidden_gem* (lesser-known or underrated title worth discovering). Results are cached in the `user_ai_recommendations` table with a 24-hour TTL to avoid calling the model on every request. If Gemini fails, the system falls back to returning the ALS-priority candidates without re-ranking.
+The tagged candidate pool is sent to Google Gemini 2.5 Flash @gemini along with a 10-film sample of the user's watch history, picked to span the full rating range - one film per rating level from 10 down to 1, so the model sees both what the user loves and what they dislike (with favorite and disliked flags included).
 
 ==== Cold Start Strategy
 
 New users do not yet have enough watch history for ALS to produce meaningful results. For these users, a dedicated cold start service runs instead. During onboarding, users select favorite actors and rate a curated set of movies. The cold start service analyzes these signals: genre weights are computed per movie with higher-rated movies contributing more weight (rating 8+ contributes weight 3, rating 6-7 contributes weight 2), content buckets are inferred from the types of content the user responded positively to, and three parallel TMDB Discover queries run - by actor, by genre, and by popularity. Results from all three sources are merged using an interleaving strategy to keep the content type distribution balanced across the final batch of 25 recommendations. Once a user accumulates enough watch history, the system automatically switches to the full ALS + Gemini pipeline on the next recommendation request.
 
-== Deployment and CI/CD
+== Deployment and CI/CD <sec:deployment>
 
 === Deployment Process
 

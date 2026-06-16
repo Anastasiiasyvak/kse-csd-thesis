@@ -16,7 +16,6 @@
   doc: doc,
   summary-page: summary-page,
   professor: professor,
-  expert: expert,
   school: school,
   date: date,
   tableof: tableof,

@@ -17,19 +17,15 @@ coverage of both films and TV series within a single catalog.
 This capstone project documents the complete development of
 *MovieCrush* - a cross-platform mobile application that unifies film
 and TV tracking, personalized recommendations, social discovery, and
-personal analytics in one product. The resulting system was implemented
-as a fully functional product featuring: a hybrid recommendation
+personal analytics in one product. The system was implemented
+as a working product with: a hybrid recommendation
 engine combining ALS collaborative filtering with TMDB Discover
 candidate generation and Google Gemini re-ranking, annual
-“Wrapped”-style analytics with personal viewing statistics, a
+"Wrapped"-style analytics with personal viewing statistics, a
 Soulmate feature that matches users by taste similarity, an
 onboarding flow that solves the cold start problem through actor
 selection and rating elicitation, and a social layer with follows,
-detailed ratings with comments, and shared lists. The technical
-implementation utilized React Native with TypeScript for the mobile
-client, a Node.js and Express backend, a PostgreSQL database, and a
-dedicated Python microservice running the collaborative filtering
-model.
+detailed ratings with comments, and shared lists. The mobile client uses React Native with TypeScript, the backend Node.js and Express, with a PostgreSQL database and a dedicated Python microservice for the collaborative filtering model.
 
 To validate the concept, three complementary research methods were
 applied before development began: a quantitative survey of 262
@@ -39,14 +35,9 @@ Moviebase. The recommendation model was initially trained on
 synthetically generated rating data to simulate early-stage user
 behavior and validate recommendation quality before large-scale user
 adoption. The model was evaluated using ROC AUC, achieving a score of
-0.877 - substantially above the random baseline of 0.5. Furthermore,
-user research established Product-Segment Fit for the target audience
+0.877 - substantially above the random baseline of 0.5. User research established Product-Segment Fit for the target audience
 of 18-24 year old viewers in Ukraine, with 75.5%
-of respondents willing to pay for a premium tier. Ultimately, the
-resulting production-ready application demonstrates that a single
-mobile product can replace the multiple disconnected tools currently
-used by viewers and deliver a personalized, socially-aware film
-discovery experience grounded in measurable user research.
+of respondents willing to pay for a premium tier. The resulting application shows that a single mobile product can replace the disconnected tools viewers currently use and deliver a personalized, socially-aware discovery experience grounded in user research.
 
 #v(2em)
 #if doc.at("keywords", default:none) != none {[

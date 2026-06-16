@@ -3,7 +3,17 @@
 #pagebreak()
 = #i18n("appendix-title", lang: option.lang) <sec:appendix>
 
-== Survey Materials
+== Survey Materials <sec:survey-materials>
+
+#figure(
+  image("../resources/img/survey/slack-announcement.png", width: 90%),
+  caption: [Survey announcement in KSE Slack]
+)
+
+#figure(
+  image("../resources/img/survey/reactions.png", width: 40%),
+  caption: [Community reactions - 43 emoji responses to the announcement]
+)
 
 === Raffle Process
 
@@ -12,17 +22,43 @@
   caption: [Random wheel spinner used to select raffle winners]
 )
 
-=== Participant Messages
-
 #figure(
   image("../resources/img/survey/messages.png", width: 70%),
   caption: [Messages from participants requesting to join the raffle]
 )
 
-== Additional Survey Charts
+#figure(
+  image("../resources/img/survey/winners.png", width: 90%),
+  caption: [Winner confirmation messages]
+)
 
-_Note: the tables below are based on 237 responses (an earlier snapshot
-of the survey). The final response count was 262._
+== Additional Survey Charts <sec:additional-charts>
+
+=== Demographics
+
+#figure(image("../resources/img/survey/age-distribution.png", width: 80%), caption: [Age distribution of survey respondents])
+
+#figure(image("../resources/img/survey/content-language.png", width: 80%), caption: [Language in which respondents consume film content])
+
+=== Viewing Habits
+
+#figure(image("../resources/img/survey/viewing-frequency.png", width: 80%), caption: [Average number of films or series watched per week])
+
+#figure(image("../resources/img/survey/tracking-habits.png", width: 90%), caption: [How respondents currently track films])
+
+=== Recommendation & Social
+
+#figure(image("../resources/img/survey/recommendation-sources.png", width: 90%), caption: [Where respondents look for recommendations])
+
+#figure(image("../resources/img/survey/social-features.png", width: 90%), caption: [Most important social features])
+
+=== Feature Validation & Monetization
+
+#figure(image("../resources/img/survey/willingness-to-pay-features.png", width: 90%), caption: [Features respondents would pay for])
+
+#figure(image("../resources/img/survey/ads-attitude.png", width: 80%), caption: [Attitude toward ads])
+
+#figure(image("../resources/img/survey/pricing.png", width: 80%), caption: [Maximum monthly price for premium])
 
 === Wrapped Statistics Feature Rating
 
@@ -56,6 +92,8 @@ among respondents. 53.8% gave it the maximum score of 5.
 
 === Respondent Profession & Field of Activity
 
+_Note: this profession breakdown is based on 237 responses (an earlier snapshot); the final survey count was 262._
+
 Segmenting professions was challenging because 89.9% of respondents were
 aged 18-24, meaning most were students. Some listed only "student", others
 listed their specialization, and those already working listed only their
@@ -75,3 +113,72 @@ their future profession rather than a current job).
   image("../resources/img/survey/profession-tables.png", width: 90%),
   caption: [Three-way breakdown of respondent profession and field of activity]
 )
+== Screen Gallery <sec:screen-gallery>
+
+#figure(
+  image("../resources/img/screens/onboarding.png", width: 100%),
+  caption: [Onboarding - actor and movie selection for cold start],
+)
+
+#figure(
+  image("../resources/img/screens/search.png", width: 80%),
+  caption: [Search - live results across media, cast, and users],
+)
+
+#figure(
+  image("../resources/img/screens/series.png", width: 100%),
+  caption: [Series - seasons and per-episode tracking],
+)
+
+#grid(
+  columns: 3,
+  gutter: 10pt,
+  figure(image("../resources/img/screens/profile.png"), caption: [Profile - stats and lists]),
+  figure(image("../resources/img/screens/actor.png"), caption: [Actor - bio and filmography]),
+  figure(image("../resources/img/screens/home.png"), caption: [Home - trending and search]),
+)
+
+=== Competitor Visibility (AppMagic) <sec:appmagic>
+
+#figure(
+  image("../resources/img/competitors/appmagic-comparison.png", width: 100%),
+  caption: [Featuring Score and chart rankings across four competitors, Jan 2021 - Jan 2026 (AppMagic)],
+)
+
+== Discovery Artifacts <sec:discovery-artifacts>
+
+#figure(
+  image("../resources/img/discovery/value-proposition.png", width: 100%),
+  caption: [Value Proposition Canvas developed during the discovery phase],
+)
+
+#figure(
+  image("../resources/img/discovery/customer-journey.png", width: 100%),
+  caption: [Customer Journey Map - from discovery to long-term retention],
+)
+
+== ML Evaluation Results <sec:ml-results>
+
+=== Iterative Optimization
+
+#figure(image("../resources/img/evaluation/baseline_results.png", width: 75%), caption: [Iteration 1 - baseline results])
+
+#figure(image("../resources/img/evaluation/iteration2_results.png", width: 75%), caption: [Iteration 2 - after algorithmic fixes (Hit Rate\@10 tripled)])
+
+#figure(image("../resources/img/evaluation/iteration3_results.png", width: 75%), caption: [Iteration 3 - after realistic data generation])
+
+#figure(image("../resources/img/evaluation/iteration4_results.png", width: 75%), caption: [Iteration 4 - Hit Rate and NDCG])
+
+#figure(image("../resources/img/evaluation/iteration4_roc.png", width: 75%), caption: [Iteration 4 - Precision, Recall, F1, ROC AUC = 0.8946])
+
+=== Grid Search
+
+#figure(image("../resources/img/evaluation/grid_search_results.png", width: 100%), caption: [Grid search - 60 hyperparameter combinations])
+
+=== Final Results
+
+#figure(image("../resources/img/evaluation/final_results_ranking.png", width: 75%), caption: [Final - Hit Rate and NDCG])
+
+#figure(image("../resources/img/evaluation/final_results_precision.png", width: 75%), caption: [Final - Precision, Recall, F1])
+
+#figure(image("../resources/img/evaluation/final_results_roc.png", width: 75%), caption: [Final ROC AUC = 0.8771])

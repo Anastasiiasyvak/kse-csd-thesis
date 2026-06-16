@@ -22,7 +22,7 @@ The tables below list all key requirements, how each one was tested, and the res
     [Search for movies, series, actors, and users], [Manual live search testing], [Pass],
     [Lists - Watched, Watchlist, Favorites, custom], [Manual testing + DB check], [Pass],
     [Social features - follows, friends' ratings], [Manual testing between two accounts], [Pass],
-    [Soulmate - finding a user with similar taste], [Unit tests (soulmate_math) + manual testing], [Pass],
+    [Soulmate - finding a user with similar taste], [Unit tests (soulmate_scoring, soulmate_similarity) + manual testing], [Pass],
     [Wrapped - personal yearly statistics], [Unit tests (wrapped) + manual testing], [Pass],
     [Comments with anonymous and spoiler options], [Manual testing of all comment modes], [Pass],
     [Episode tracking for series], [Unit tests (episode_helpers) + manual testing], [Pass],
@@ -61,59 +61,55 @@ The backend uses Jest together with ts-jest for TypeScript support. All tests li
 
 === What Is Covered
 
-==== soulmate_math.test.ts
+==== soulmate_scoring_test.ts and soulmate_similarity_test.ts
 
-Covers all the math behind the Soulmate algorithm - cosine similarity, Jaccard similarity, cosineSimilarityFromCounts, weightedSum, buildRatingVectors, and isRecomputeThrottled.
+Together these cover the math behind the Soulmate algorithm: cosine similarity, Jaccard similarity, cosineSimilarityFromCounts, weightedSum, buildRatingVectors, and isRecomputeThrottled.
 
-Special attention is paid to edge cases: empty vectors, zero norms (to avoid division by zero), vectors of different lengths, and cooldown logic with different time intervals. This matters because any bug in these functions directly affects the quality of user matching.
-
-Examples of what is checked:
+Edge cases get special attention: empty vectors, zero norms (to avoid division by zero), vectors of different lengths, and cooldown logic across time intervals. For example:
 - two identical vectors produce similarity = 1.0
 - two orthogonal vectors produce similarity = 0
-- weightedSum with all zero metrics returns 0
-- cooldown returns true if less than 24 hours have passed, false if more or if lastComputedAt is null
+- weightedSum with all-zero metrics returns 0
+- the cooldown returns true if less than 24 hours have passed, false otherwise or when lastComputedAt is null
 
-==== als_service.test.ts
+==== als_service_test.ts
 
-Covers helper functions in the recommendation service: getCfRatio, filterValidItems, sliceToLimit, cacheRowToAlsItem, mediaTypeFromTmdb, and releaseYearFromTmdb.
+Covers helper functions in the recommendation service: mediaTypeFromTmdb and releaseYearFromTmdb (parsing TMDB response fields), sliceToLimit, filterValidItems, and cacheRowToAlsItem. filterValidItems is checked to confirm it skips items without a title and preserves the order coming from ALS.
 
-A key check is the threshold that switches between cold start and the ALS pipeline via getCfRatio - when watchedCount is 50 or more, the higher CF ratio (0.7) is returned; below that, the lower one (0.5). filterValidItems is also tested to confirm it correctly skips items without a title and preserves the order coming from ALS.
+==== cold_start_service_test.ts
+
+The largest suite, covering the onboarding-based cold start logic: getContentBucket, computeGenreWeights, getTopGenreIds, getAllowedBucketsFiltered, passesLanguageGenreFilter, and buildBatch. It also runs full onboarding taste scenarios end to end to confirm the batch composition stays balanced.
 
 ==== wrapped_test.ts
 
-Covers the calculation of personal yearly statistics: top genre, top actor based on vote count, cinema ritual (the most common watch time of day), and total watch time in minutes.
+Covers yearly statistics helpers: determineCinemaVibe (the most common watch time of day), calculateTimeStats (total watch time), and calculateFanPercentile.
 
-==== auth_validators.test.ts
+==== auth_validators_test.ts
 
-34 tests covering input validation for registration and login. Checks include email format (with and without subdomains, dots, special characters), username rules (minimum and maximum length, allowed characters), and password requirements (minimum length, presence of digits and letters).
+34 tests covering input validation for registration and login: email format (with and without subdomains, dots, special characters), username rules (length, allowed characters), and password requirements (length, presence of digits and letters). The validators run before any data reaches the backend.
 
-This is important from a security perspective - the validators are the first line of defense before any data reaches the backend.
+==== tmdb_helpers_test.ts
 
-==== episode_helpers.test.ts
+Covers parseTmdbId, which solves a real bug found during development: PostgreSQL stores BIGINT but the pg driver returns it as a string to avoid losing precision on 64-bit values. The helper accepts both numeric and string input and returns the correct number or null for invalid input. Tested cases include regular numbers, numeric strings, large 64-bit values, zero, negatives, NaN, Infinity, null, undefined, and empty string.
 
-27 tests for the parseTmdbId helper, which solves a real bug found during development: PostgreSQL stores BIGINT but the pg driver returns it as a string to avoid losing precision on 64-bit values. The helper accepts both numeric and string formats and returns the correct number or null for invalid input.
+==== episode_helpers_test.ts
 
-Tested cases include: regular numbers, numeric strings, negative numbers, strings with letters, null, undefined, and empty string.
-
-==== tmdb_helpers.test.ts
-
-Helper functions for working with TMDB API responses - detecting media type (movie or tv) and parsing release dates.
+Covers buildAllEpisodesList, which flattens a series' seasons into a single (season, episode) list. Tested cases include skipping season 0 (Specials), empty input, seasons with zero episodes, and counting episodes across many seasons.
 
 === Results
 
 All tests pass. The CI pipeline runs them automatically via `npm test` on every push to main and feature branches - if any test fails, the build does not pass and deployment does not happen.
 
-One limitation worth noting: there are no integration tests for complex end-to-end flows such as the full recommendation pipeline, since those require live database and CF service connections. Is noted as an area for future improvement.
+One gap: there are no integration tests for end-to-end flows like the full recommendation pipeline, since those need live database and CF service connections.
 
 == Manual Testing
 
 === Testing Setup
 
-The app was tested manually throughout the development process. Three external testers used the app through Expo Go on my personal Android device. An Android APK was also built via EAS Build for direct distribution without the Play Store, though the main testing session was conducted through Expo Go. iOS is compatible but requires an Apple Developer account for public distribution, so it was demonstrated on a personal device only.
+The app was tested manually throughout the development process. Thirteen external testers used the app through Expo Go on my personal Android device. An Android APK was also built via EAS Build for direct distribution without the Play Store, though the main testing session was conducted through Expo Go. iOS is compatible but requires an Apple Developer account for public distribution, so it was demonstrated on a personal device only.
 
 === User Feedback
 
-All three testers praised the interface and said the app felt comfortable and polished to use. All feedback was given in Ukrainian and is translated here for this document.
+All thirteen testers praised the interface and said the app felt comfortable and polished to use. Feedback was given in Ukrainian and is translated here. Three representative responses are quoted below; the rest is synthesized at the end of this section.
 
 *Tester 1:*
 
@@ -131,13 +127,19 @@ Two improvement requests came up: the "More Like This" section felt like it coul
 The interface is very intuitive - you really understand where to find everything, as if the app was built from a template, the developer clearly understood what goes where. The analytics part amazed me. On Spotify I wait to see my Wrapped like it's a holiday, I love sharing it in my Instagram stories so everyone knows how cool I am. I would really love to share film analytics in stories too. The recommendations are great - I saw films in my recommendations that I had already watched and loved, I just hadn't added them to my watched list in the app yet. And I watched one film from the list and gave it 9 out of 10. So I am very happy.
 ]
 
-This was a strong real-world signal that the hybrid ALS + Gemini pipeline was working as intended - without any explanation of how the system works, the tester independently noticed that the recommendations matched their actual taste.
+Notably, the tester noticed the recommendations matched their taste without any explanation of how the system works - a sign the ALS + Gemini pipeline behaved as intended.
 
 *Tester 3:*
 
 #infobox[
 I really like the colors - they don't hurt your eyes and they match each other. I was pleasantly surprised by the onboarding because I use Letterboxd and I have never seen anything like it there. I am really glad that I can immediately enter what I like and get recommendations based on that. I love that I can go to an actor's page and see where they appeared - sometimes I get really into an actor and now instead of googling I just go to their page from a film I watched and browse their filmography. And the fact that there is a split between Acting and Crew tabs means I can immediately open just the Acting tab. I also like that the rating is shown right on the poster so I don't have to open the film to see it. And I really appreciated the filter in recommendations especially the tab "russia is a terrorist state" - that is a nice reminder. In the future I would love a permanent filter where I can set that I never want to see content from a specific country in my recommendations at all.
 ]
+
+=== Feedback Across All Testers
+
+Grouping the feedback from all thirteen testers shows clear patterns. The most praised features were the analytics (Wrapped), the Soulmate matching, friends' ratings, the actor page with full filmography, and the ability to rate a whole series without rating each episode. One tester with an analytics background remarked that features like Soulmate and Wrapped would noticeably improve retention.
+
+The most requested improvements clustered around a few themes: showing where a movie can be streamed (with a direct link), automatic watched-tracking when a film is viewed on an external service, push notifications for new episodes and cinema releases, separating films and series within lists, and importing an existing watchlist on signup instead of adding movies by hand. Smaller suggestions included animated transitions in Wrapped, a Spotify link for soundtracks, a private-account option, and larger rating stars in onboarding for accessibility. Notably, most of the top requests - streaming availability, push notifications, and share templates - already match the planned roadmap (see Limitations and Future Improvements), confirming the direction rather than redirecting it.
 
 === Bug Found and Fixed During Testing
 
@@ -151,7 +153,7 @@ The fix was a new `POST /tmdb/media/batch` endpoint - a single request that read
 
 The goal was to build a collaborative filtering recommendation system that, based on user behavior (watched films, ratings, favorites), produces personalized recommendations - films the user is likely to want to watch next.
 
-The initial plan was to use LightFM - a more flexible library with support for content-based and collaborative hybrid filtering. However, LightFM has no official Windows support, which made development impossible in the available environment. The `implicit` library was chosen as a replacement because it implements the same ALS algorithm from the original Hu, Koren, Volinsky (2008) paper, has full Windows support, and supports BM25 weighting and confidence-aware training.
+The initial plan was to use LightFM - a more flexible library with support for content-based and collaborative hybrid filtering. However, LightFM has no official Windows support, which made development impossible in the available environment. The `implicit` library was chosen as a replacement because it implements the same ALS algorithm from the original Hu, Koren, Volinsky (2008) paper @hu2008collaborative, has full Windows support, and supports BM25 weighting and confidence-aware training.
 
 === Data Flow
 
@@ -176,52 +178,29 @@ A new script `generate_realistic_data.py` was built with a fundamentally differe
 
 Development went through 5 iterations, each producing a measurable improvement in metrics. The approach was: baseline, problem, hypothesis, experiment, measurement.
 
+The per-iteration and final result charts are collected in #ref(<sec:ml-results>, supplement: "Appendix").
+
 ==== Iteration 1 — Baseline
 
 Configuration: 208 synthetic users, 315 films, ~10K interactions. ALS with factors=32, iterations=20, regularization=0.1. No BM25 weighting. Ratings used directly as confidence weights.
 
-#figure(
-  image("/resources/img/evaluation/baseline_results.png", width: 70%),
-  caption: [Iteration 1 - baseline results],
-)
-
-Four problems were found: incorrect LOO methodology where a separate model was trained per user (208 models), missing BM25 weighting, wrong confidence interpretation where ratings were used directly as weights instead of being scaled through the confidence parameter alpha as the original ALS paper requires, and dislikes added as weak positive signals with weight 0.1 which the model interpreted as mild interest rather than rejection.
+Four problems were found: incorrect @loo methodology where a separate model was trained per user (208 models), missing BM25 weighting, wrong confidence interpretation where ratings were used directly as weights instead of being scaled through the confidence parameter alpha as the original ALS paper requires, and dislikes added as weak positive signals with weight 0.1 which the model interpreted as mild interest rather than rejection.
 
 ==== Iteration 2 - Algorithmic Fixes
 
 Changes: single model trained on all users (correct LOO), BM25 weighting added, alpha parameter introduced, dislikes fully removed from the training matrix and used only as a post-filter at inference time, structured preference scoring introduced.
 
-#figure(
-  image("/resources/img/evaluation/iteration2_results.png", width: 70%),
-  caption: [Iteration 2 - results after algorithmic fixes. Hit Rate\@10 tripled.],
-)
-
 ==== Iteration 3 - Realistic Data Generation
 
 After switching to the cluster-based generation script:
 
-#figure(
-  image("/resources/img/evaluation/iteration3_results.png", width: 70%),
-  caption: [Iteration 3 - results after realistic data generation],
-)
-
-*Key finding:* data quality turned out to be a more critical factor than all algorithmic fixes combined. Hit Rate\@10 jumped from 17% to 46% - a larger gain than all previous improvements together.
+*Key finding:* data quality mattered more than the algorithmic fixes.   Hit Rate\@10 jumped from 17% to 46% - a larger gain than all previous improvements together.
 
 ==== Iteration 4 - Full Evaluation (Classification + ROC AUC)
 
 A full set of metrics was added: Precision\@K, Recall\@K, F1\@K, NDCG\@K, and ROC AUC.
 
 *ROC AUC methodology for collaborative filtering.* There is no standard classification scenario in CF, so a negative sampling approach was used: for each test user, 1 known relevant item is taken and 50 random items the user has not watched are sampled as negatives. The model scores all 51 items and the ROC curve is built on (y_true, y_scores).
-
-#figure(
-  image("/resources/img/evaluation/iteration4_results.png", width: 70%),
-  caption: [Iteration 4 - Hit Rate and NDCG results],
-)
-
-#figure(
-  image("/resources/img/evaluation/iteration4_roc.png", width: 70%),
-  caption: [Iteration 4 - Precision, Recall, F1 and ROC AUC = 0.8946],
-)
 
 ==== Iteration 5 - Hyperparameter Tuning (Grid Search)
 
@@ -231,11 +210,6 @@ Search space: factors {12, 16, 20, 24, 32}, alpha {20, 40, 60, 80}, regularizati
 
 Each combination was trained with fixed random_state=42 on the same train/test split and evaluated on the same test pairs.
 
-#figure(
-  image("/resources/img/evaluation/grid_search_results.png", width: 100%),
-  caption: [Grid search results - 60 hyperparameter combinations],
-)
-
 Key observations: all top-5 configurations by HR\@10 and MRR use alpha=20 - lower than the initial value of 40. For a sparse matrix, lower confidence weighting works better because it does not overfit on popular items. factors=24 showed the best balance. regularization=1.0 was optimal - on a small matrix, stronger smoothing is needed.
 
 Selected configuration: *factors=24, alpha=20, regularization=1.0*.
@@ -243,23 +217,8 @@ Selected configuration: *factors=24, alpha=20, regularization=1.0*.
 === Final Results
 
 #figure(
-  image("/resources/img/evaluation/final_results_ranking.png", width: 70%),
-  caption: [Final results - Hit Rate and NDCG after all iterations],
-)
-
-#figure(
-  image("/resources/img/evaluation/final_results_precision.png", width: 70%),
-  caption: [Final results - Precision, Recall, and F1],
-)
-
-#figure(
-  image("/resources/img/evaluation/final_results_roc.png", width: 70%),
-  caption: [Final ROC AUC = 0.8771],
-)
-
-#figure(
   image("/resources/img/evaluation/roc_curve.png", width: 80%),
-  caption: [ROC Curve - ALS Collaborative Filtering. AUC = 0.8771 is substantially above the random baseline of 0.5],
+  caption: [ROC Curve - ALS Collaborative Filtering. AUC = 0.8771, well above the random baseline of 0.5],
 )
 
 ROC AUC = 0.8771 means the model correctly ranks a relevant film above a random irrelevant one in 87.71% of cases.
@@ -277,33 +236,23 @@ ROC AUC = 0.8771 means the model correctly ranks a relevant film above a random 
   caption: [Final ALS model metrics after all iterations. MRR: 0.2639. Average rank when found: 12.11]
 )
 
-=== References
-
-The following academic sources informed the methodology and implementation of the collaborative filtering module:
-
-+ Hu, Y., Koren, Y., & Volinsky, C. (2008). *Collaborative Filtering for Implicit Feedback Datasets.* Proceedings of ICDM 2008. #link("https://dl.acm.org/doi/10.1109/ICDM.2008.22")[ACM Digital Library]
-
-+ Frederickson, B. (2022). *implicit: Fast Python Collaborative Filtering for Implicit Feedback Datasets.* #link("https://github.com/benfred/implicit")[GitHub]
-
-+ Robertson, S., & Zaragoza, H. (2009). *The Probabilistic Relevance Framework: BM25 and Beyond.* Foundations and Trends in Information Retrieval. #link("https://www.researchgate.net/publication/220613776_The_Probabilistic_Relevance_Framework_BM25_and_Beyond")[ResearchGate]
-
 == Limitations and Future Improvements
 
 === Current Limitations
 
 *Synthetic data for ML evaluation.* The ALS model was evaluated on a generated dataset that models realistic viewing patterns, but not on real users. Production metrics may differ - either better (more data means better embeddings) or worse (real taste patterns are more complex than synthetic ones).
 
-*Small interaction matrix.* The current training matrix is 208on265 - very small for a production system. ALS works better on larger matrices where there are more cross-user signals. As the user base grows, the metrics should improve.
+*Small interaction matrix.* The current training matrix is 208 by265 - very small for a production system. ALS works better on larger matrices where there are more cross-user signals. As the user base grows, the metrics should improve.
 
 *Manual model retraining.* The model is currently retrained manually. In production, automated cron jobs are needed to keep the model up to date with new user data.
 
-*No TTL on tmdb_media_cache.* Movie metadata is stored in the cache without an expiry time. If TMDB updates a poster or any other information, the cache will not pick up the change. A periodic refresh job with a weekly TTL is planned as a future improvement.
+*No TTL on tmdb_media_cache.* Movie metadata is cached without an expiry time, so if TMDB updates a poster or other field, the cache will not pick up the change.
 
 *iOS distribution.* Public distribution on iOS requires an Apple Developer account. At the moment the iOS version is only shown on a personal device through Expo.
 
 *Email verification in the test environment.* The free Resend plan without a custom domain can only send emails to the account owner's address. For testing purposes, email verification was made optional - the mechanism is kept in the codebase and ready for production use.
 
-*Limited external testing.* Three testers had access to the app through Expo Go on my device. Testing across a wider range of devices and OS versions remains a task for the next stage.
+*Limited external testing.* Thirteen testers had access to the app through Expo Go on my device. Testing across a wider range of devices remains a task for the next stage.
 
 === Planned Improvements
 
